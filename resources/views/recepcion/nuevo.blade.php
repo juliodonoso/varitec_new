@@ -28,6 +28,15 @@ $('#provincia').change(function() {
       
   });
 });
+
+$(".btn-success").click(function(){ 
+  var html = $(".clone").html();
+  $(".increment").after(html);
+});
+
+$("body").on("click",".btn-danger",function(){ 
+  $(this).parents(".control-group").remove();
+});
   </script>
 @endpush
 
@@ -45,8 +54,8 @@ $('#provincia').change(function() {
                 <div class="card-content">
                     <div class="content">
 
-                      {{ Form::open(array('action' => 'RecepcionController@store')) }}
-                        
+                      {{ Form::open(array('action' => 'RecepcionController@store','enctype'=>"multipart/form-data")) }}
+                      {{csrf_field()}}
                         <div class="col-md-6">  
                           <div class="form-group">
                             <label for="numeroRecepcion" >Numero  Recepcion :</label>
@@ -118,21 +127,22 @@ $('#provincia').change(function() {
                          <div class="col-md-6">  
                           <div class="form-group">
                             <label for="mailContacto">Email Contacto</label>
-                              <input type="text" class="form-control" id="mailContacto" name="mailContacto" required>
+                              {{Form::text('email',null,['class' => 'form-control', 'id' => 'email','required']) }}
                           </div>
                         </div>
 
                         <div class="col-md-6">  
                           <div class="form-group">
                             <label for="equipo">Descripción Equipo</label>
-                              <input type="input" class="form-control" id="equipo" name="equipo" required>
+                            {{Form::text('equipo',null,['class' => 'form-control', 'id' => 'equipo','required']) }}
                           </div>
                         </div>
 
                         <div class="col-md-6">  
                           <div class="form-group">
                             <label for="modelo">Modelo Equipo</label>
-                              <input type="input" class="form-control" id="modelo" name="modelo" required>
+                            {{Form::text('modelo',null,['class' => 'form-control', 'id' => 'modelo','required']) }}
+                           
                           </div>
                         </div>
 
@@ -163,9 +173,39 @@ $('#provincia').change(function() {
                             <label for="descripcionVisual">Descripcion Visual</label>
                             <textarea class="form-control" rows="5" id="descripcionVisual" name="descripcionVisual" required></textarea>
                           </div>
-                        </div>
+                      </div>
+                     
 
-                          <br>
+
+
+                      <div class="input-group hdtuto control-group lst increment" >
+                  
+                        <input type="file" name="filenames[]" class="myfrm form-control">
+                  
+                        <div class="input-group-btn"> 
+                  
+                          <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                  
+                        </div>
+                  
+                      </div>
+                  
+                      <div class="clone hide">
+                  
+                        <div class="hdtuto control-group lst input-group" style="margin-top:10px ">
+                  
+                          <input type="file" name="filenames[]" style="opacity: 1;" class="myfrm form-control">
+                  
+                          <div class="input-group-btn"> 
+                  
+                            <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                  
+                          </div>
+                  
+                        </div>
+                  
+                      </div>  
+                      <br> <br> <br>
                         <div class="col-md-12">
                             <div class="form-group">
                               <button type="submit" class="btn btn-primary">Guardar</button>
