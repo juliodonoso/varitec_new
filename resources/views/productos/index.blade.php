@@ -93,7 +93,7 @@
       @include('include.mensajes')
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header" data-background-color="blue">
+                <div class="card-header" data-background-color="green">
                     <h4 class="title">Productos</h4>
                     <p class="category">Lista de Productos</p>
                 </div>

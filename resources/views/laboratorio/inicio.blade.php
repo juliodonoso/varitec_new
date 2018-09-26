@@ -11,23 +11,31 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" data-background-color="green">
-                    <h4 class="title">Recepción</h4>
-                    <p class="category">Lista de Recepcion de Equipos</p>
+                    <h4 class="title">Laboratorio</h4>
+                    <p class="category">Lista equipos en laboratorio</p>
                 </div>
                 <div class="card-content">
-                    <div class="col-md-10 ">
-                         <a href="Recepcion/create"  class="btn btn-primary btn-sm"  title="Add">   <i class="fa fa-plus"></i>
-                              Registrar
-                          </a>
+                    
+                    <div class="col-md-4 ">
+                     <div class="form-group">
+                            <label for="tipoTrabajo">Lista Estado Laboratiorio</label>
+                            <select class="form-control" id="tipoTrabajo" name="tipoTrabajo">
+                              <option value="0" >Seleccione Estado</option>
+                              <option value="1" >Terminado</option>
+                              <option value="2" >Laboratorio</option>
+                              <option value="3" >Compras</option>
+                            </select>
+                          </div>
                     </div>
-
                        <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                    <th>Numero Recepción</th>
-                                    <th>Cliente</th>
-                                    <th>Producto</th>
+                                    <th>Nùmero Laboratorio</th>
+                                    <th>Nùmero Recepciòn</th>
+                                    <th>Fecha Ingreso</th>
                                     <th>Fecha Recepción</th>
+                                    <th>Tecnico Asignado</th>
+                                    <th>Gestionar / Trabajar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -35,14 +43,15 @@
                                       <td></td>
                                       <td></td>
                                       <td></td>
+                                      <td></td>
+                                       <td></td>
+
                                       <td> 
                                         <a href="" data-ruta="" data-id="" data-name="" data-num="" data-toggle="modal" data-target="#editereg" class="btn btn-info btn-xs editereg" title="Editar">
                                           <i class="fa fa-pencil"></i>
                                        </a>
 
-                                        <a  href="" data-ruta="" data-id="" data-name="" data-toggle="modal" data-target="#deletereg"  class="btn btn-xs btn-danger deletereg" title="Eliminar">
-                                        <i class="fa fa-trash"></i>
-                                        </a></td>
+                                        </td>
                                     </tr>
                                 </tbody>
                       </table>

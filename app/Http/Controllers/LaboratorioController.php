@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Recepcion;
-use App\Folios;
-use App\Regiones;
-class RecepcionController extends Controller
+class LaboratorioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,9 @@ class RecepcionController extends Controller
     public function index()
     {
         //
-       
-        $recepcion = Recepcion::all();
-        return view('recepcion.inicio');
+        $recepcion=Recepcion::all();
+        dd($recepcion);
+        return view('laboratorio.inicio',['recepcion'=> $recepcion]);
     }
 
     /**
@@ -29,10 +27,8 @@ class RecepcionController extends Controller
     public function create()
     {
         //
-        $folio = Folios::all();
-        $regiones = Regiones::select('id','rgnombre')->get()->pluck('rgnombre','id');
         
-        return view('recepcion.nuevo',['folioRecepcion' => $folio[0]->folioRecepcion,'regiones'=>$regiones]);
+        return view('laboratorio.nuevo');
     }
 
     /**
@@ -43,9 +39,7 @@ class RecepcionController extends Controller
      */
     public function store(Request $request)
     {
-        //validar ingresos
-        $recepcion= new Recepcion();
-        $recepcion->save($request->all());
+        //
     }
 
     /**

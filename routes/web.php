@@ -34,12 +34,17 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/config/users/update/{id}', 'UsuarioController@updateUsers')->name('config.updateUsers');
 
    Route::resource('Recepcion','RecepcionController');
+   Route::resource('Laboratorio','LaboratorioController');
    Route::resource('Bodega','BodegaController');
    Route::resource('Clientes','ClientesController');
    Route::resource('Productos','ProductosController');
    Route::resource('Proveedores','ProveedoresController');
-   Route::resource('Provincias','ProveedoresController');
+   Route::resource('Provincias','ProvinciasController');
    Route::resource('Regiones','RegionesController');
-
+   Route::resource('Comunas','ComunasController');
+   Route::prefix('ajax')->group(function () {
+    Route::get('provinciasAjax/{id}','ProvinciasController@findProvincias');
+    Route::get('comunasAjax/{id}','ComunasController@findComunas');
+});
 
 }); 

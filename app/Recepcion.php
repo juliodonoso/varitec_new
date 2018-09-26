@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Recepcion extends Model
 {
     //
+   protected $table = 'tbrecepcion';
+  
 }

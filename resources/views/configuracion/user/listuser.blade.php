@@ -60,8 +60,8 @@
         <div class="col-md-12">
 
             <div class="card">
-                <div class="card-header" data-background-color="blue">
-                    <h4 class="title">Manejador Usuarios</h4>
+                <div class="card-header" data-background-color="green">
+                    <h4 class="title">Gestion Usuarios</h4>
                     <p class="category">Lista de Usuarios</p>
                 </div>
                 <div class="card-content">

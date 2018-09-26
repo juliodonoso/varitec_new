@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Recepcion;
-use App\Folios;
-use App\Regiones;
-class RecepcionController extends Controller
+use App\Comunas;
+
+class ComunasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,6 @@ class RecepcionController extends Controller
     public function index()
     {
         //
-       
-        $recepcion = Recepcion::all();
-        return view('recepcion.inicio');
     }
 
     /**
@@ -29,10 +25,6 @@ class RecepcionController extends Controller
     public function create()
     {
         //
-        $folio = Folios::all();
-        $regiones = Regiones::select('id','rgnombre')->get()->pluck('rgnombre','id');
-        
-        return view('recepcion.nuevo',['folioRecepcion' => $folio[0]->folioRecepcion,'regiones'=>$regiones]);
     }
 
     /**
@@ -43,9 +35,7 @@ class RecepcionController extends Controller
      */
     public function store(Request $request)
     {
-        //validar ingresos
-        $recepcion= new Recepcion();
-        $recepcion->save($request->all());
+        //
     }
 
     /**
@@ -92,4 +82,14 @@ class RecepcionController extends Controller
     {
         //
     }
+
+    /**
+     * ajax comunas
+    */
+    public function findComunas($id){
+        $comunas=Comunas::where('coprovincia',$id)->get()->pluck('conombre','id');
+       
+        return $comunas;
+    }
+
 }

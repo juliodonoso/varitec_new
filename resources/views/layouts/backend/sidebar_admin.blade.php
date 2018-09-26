@@ -146,13 +146,13 @@
                     <li>
                         <a data-toggle="" aria-expanded="" href="#menuRecepcion">
                             <i class="material-icons">import_contacts</i>
-                            <p> Contabilidad </p>
+                            <p> Cotizaciòn y Diagnostico  </p>
                         </a>
                     </li>                         
                     
                     <li>
-                        <a>
-                            <i class="material-icons">group_work</i>
+                        <a href="{{route('Laboratorio.index')}}">
+                            <i class="material-icons"  >group_work</i>
                             <p> Laboratorio </p>
                         </a>
                     </li>                        

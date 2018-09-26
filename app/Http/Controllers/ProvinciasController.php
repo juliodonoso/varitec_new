@@ -79,4 +79,10 @@ class ProvinciasController extends Controller
         'poregion' => "required|string|max:2",
       ]);
     }
+
+    public function findProvincias($id){
+        $provincias=Provincias::where('poregion',$id)->get()->pluck('ponombre','id');;
+       
+        return $provincias;
+    }
 }

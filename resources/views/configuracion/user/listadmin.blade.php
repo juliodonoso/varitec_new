@@ -59,9 +59,9 @@
       @include('include.mensajes')
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header" data-background-color="blue">
-                    <h4 class="title">Manejador Administradores</h4>
-                    <p class="category">Lista de Administradores</p>
+                <div class="card-header" data-background-color="green">
+                    <h3 class="title">Gestión de  Administradores</h3>
+                    <p class="category">Listado</p>
                 </div>
                 <div class="card-content">
                     <div class="col-md-10 ">

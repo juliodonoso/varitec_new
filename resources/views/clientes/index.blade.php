@@ -56,9 +56,9 @@
       @include('include.mensajes')
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header" data-background-color="blue">
-                    <h4 class="title">Clientes</h4>
-                    <p class="category">Lista de Clientes</p>
+                <div class="card-header" data-background-color="green">
+                    <h4 class="title">Gestor Clientes</h4>
+                    <p class="category">Listado</p>
                 </div>
                 <div class="card-content">
                     <div class="col-md-10 ">
