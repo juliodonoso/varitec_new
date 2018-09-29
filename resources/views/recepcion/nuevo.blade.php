@@ -3,10 +3,17 @@
 @section('content')
 
 @push('js')
+<script src="{{ URL::asset('js/jquery.Rut.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
-  $('#regiones').change(function() {
-    var selectedRegion = $('#regiones').val()
+  $('#rutCliente').Rut({
+    on_error: function(){ alert('Rut incorrecto'); 
+    $('#rutCliente').val('')
+  }
+  });
+
+  $('#region').change(function() {
+    var selectedRegion = $('#region').val()
     $('#provincia').attr('placeholder','Seleccione Provincia')  
     $.get('../ajax/provinciasAjax/'+selectedRegion, function(data) {
         $.each(data, function(i, value) {
@@ -68,28 +75,39 @@ $("body").on("click",".btn-danger",function(){
                         <div class="col-md-6">
                             <div class="form-group">
                               <label for="fechaRecepcion">Fecha Recepción</label>
-                              <input type="date" class="form-control" id="fechaRecepcion" name="fechaRecepcion" value="{{ date('Y-m-d') }}" readonly>
+                              {{Form::date('fechaRecepcion',\Carbon\Carbon::now(),['class' => 'form-control', 'id' => 'fechaRecepcion','required']) }}
                             </div>
                         </div>
 
                          <div class="col-md-6">  
                           <div class="form-group">
                             <label for="cliente">Cliente</label>
-                              <input required type="input" class="form-control" id="cliente" name="cliente" required>
+                            {{Form::text('cliente',null,['class' => 'form-control', 'id' => 'cliente','required']) }}
+                            
                           </div>
                         </div>
                         
                         <div class="col-md-6">  
                           <div class="form-group">
-                            <label for="rut">Rut</label>
-                              <input required type="input" class="form-control" id="rut" name="rut">
+                            <label for="rutCliente">Rut</label>
+                            {{Form::text('rutCliente',null,['class' => 'form-control', 'id' => 'rutCliente','required']) }}
+                             
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">  
+                          <div class="form-group">
+                            <label for="telefono">Telefono</label>
+                            {{Form::text('telefono',null,['class' => 'form-control', 'id' => 'rut','required']) }}
+                             
                           </div>
                         </div>
 
                         <div class="col-md-6">  
                           <div class="form-group">
                             <label for="direccion">Dirección</label>
-                              <input type="input" class="form-control" id="direccion" name="direccion" required>
+                            {{Form::text('direccion',null,['class' => 'form-control', 'id' => 'direccion','required']) }}
+                              
                           </div>
                         </div>
 
@@ -98,7 +116,7 @@ $("body").on("click",".btn-danger",function(){
                           <div class="form-group">
                             <label for="region">Región</label>
                             {{Form::select('region', ($regiones) , null, ['class' => 'form-control', 
-                            'id' => 'regiones',
+                            'id' => 'region',
                             'placeholder' => 'Seleccione Region','required'])}}
                           </div>
                         </div>
@@ -141,7 +159,7 @@ $("body").on("click",".btn-danger",function(){
                         <div class="col-md-6">  
                           <div class="form-group">
                             <label for="modelo">Modelo Equipo</label>
-                            {{Form::text('modelo',null,['class' => 'form-control', 'id' => 'modelo','required']) }}
+                            {{Form::text('modelo',null,['class' => 'form-control', 'id' => 'modelo','required'])}}
                            
                           </div>
                         </div>
@@ -149,7 +167,7 @@ $("body").on("click",".btn-danger",function(){
                         <div class="col-md-6">  
                           <div class="form-group">
                             <label for="serie">Numero de Serie</label>
-                              <input type="input" class="form-control" id="serie" name="serie" required>
+                            {{Form::text('serie',null,['class' => 'form-control', 'id' => 'serie','required'])}}
                           </div>
                         </div>
 
@@ -177,14 +195,14 @@ $("body").on("click",".btn-danger",function(){
                      
 
 
-
+                      <div class="col-md-12">
                       <div class="input-group hdtuto control-group lst increment" >
                   
                         <input type="file" name="filenames[]" class="myfrm form-control">
                   
                         <div class="input-group-btn"> 
                   
-                          <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                          <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Agregar</button>
                   
                         </div>
                   
@@ -198,13 +216,14 @@ $("body").on("click",".btn-danger",function(){
                   
                           <div class="input-group-btn"> 
                   
-                            <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                            <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remover</button>
                   
                           </div>
                   
                         </div>
                   
                       </div>  
+                      </div>
                       <br> <br> <br>
                         <div class="col-md-12">
                             <div class="form-group">

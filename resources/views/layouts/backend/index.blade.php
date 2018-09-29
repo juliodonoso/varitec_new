@@ -13,7 +13,7 @@
     <link href="{{ URL::asset('tim/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
     <link href="{{ URL::asset('tim/css/material-dashboard.css?v=1.2.1') }}" rel="stylesheet" />
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <!--  CSS for Demo Purpose, dont include it in your project     -->
     <link href="{{ URL::asset('tim/css/demo.css') }}" rel="stylesheet" />
     @stack('css')
     <!--     Fonts and icons     -->
@@ -108,13 +108,14 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 <script src="{{ URL::asset('tim/js/bootstrap-notify.js') }}"></script>
 <!-- Material Dashboard javascript methods -->
 <script src="{{ URL::asset('tim/js/material-dashboard.js?v=1.2.1') }}"></script>
-<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<!-- Material Dashboard DEMO methods, dont include it in your project -->
 <script src="{{ URL::asset('tim/js/demo.js') }}"></script>
 
 <!-- Forms Validations Plugin -->
 <script src="{{ URL::asset('tim/js/jquery.validate.min.js') }}"></script>
 <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
 <script src="{{ URL::asset('tim/js/moment.min.js') }}"></script>
+
 <!--   Sharrre Library    -->
 <script src="{{ URL::asset('tim/js/jquery.sharrre.js') }}"></script>
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
