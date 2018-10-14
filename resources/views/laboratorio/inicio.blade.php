@@ -12,47 +12,45 @@
             <div class="card">
                 <div class="card-header" data-background-color="green">
                     <h4 class="title">Laboratorio</h4>
-                    <p class="category">Lista equipos en laboratorio</p>
+                    <p class="category">Lista equipos a trabajo</p>
                 </div>
                 <div class="card-content">
-                    
-                    <div class="col-md-4 ">
-                     <div class="form-group">
-                            <label for="tipoTrabajo">Lista Estado Laboratiorio</label>
-                            <select class="form-control" id="tipoTrabajo" name="tipoTrabajo">
-                              <option value="0" >Seleccione Estado</option>
-                              <option value="1" >Terminado</option>
-                              <option value="2" >Laboratorio</option>
-                              <option value="3" >Compras</option>
-                            </select>
-                          </div>
+                    <div class="col-md-10 ">
+                         <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-primary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
+                              Equipos en Laboratorio
+                          </a>
                     </div>
+
                        <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                    <th>Nùmero Laboratorio</th>
-                                    <th>Nùmero Recepciòn</th>
-                                    <th>Fecha Ingreso</th>
-                                    <th>Fecha Recepción</th>
-                                    <th>Tecnico Asignado</th>
-                                    <th>Gestionar / Trabajar</th>
+                                    <th>Numero Recepción</th>
+                                    <th>Cliente</th>
+                                    <th>Codigo</th>
+                                    <th>Equipo</th>
+                                    <th>tipo de trabajo</th>
+                                    <th>Pasar a Laboratorio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                   @foreach($recepcion as $reg)
                                     <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                       <td></td>
-
+                                      <td>{{ $reg->numeroRecepcion }}</td>
+                                      <td>{{ $reg->clNombre }}</td>
+                                      <td>{{ $reg->prBarcode }}</td>
+                                      <td>{{ $reg->prNombre }}</td>
+                                      <td>{{ $reg->tipoTrabajo }}</td>
                                       <td> 
-                                        <a href="" data-ruta="" data-id="" data-name="" data-num="" data-toggle="modal" data-target="#editereg" class="btn btn-info btn-xs editereg" title="Editar">
-                                          <i class="fa fa-pencil"></i>
+                                        <a href=""  class="btn btn-info btn-xs editereg" title="Ver">
+                                          <i class="fa fa-check-square-o"></i>
                                        </a>
 
+                                        <a href=""  class="btn btn-info btn-xs editereg" title="Ver">
+                                          <i class="fa fa-eye"></i>
+                                       </a>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                       </table>
                                             

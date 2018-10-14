@@ -28,7 +28,6 @@
 
 <style>
     * {font-size: 11px}
-
     .sidebar .nav p {
         font-size: 11px;}
 
@@ -93,8 +92,8 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
         </div>
     </div>
 <!--   Core JS Files   -->
-<script src="{{ URL::asset('tim/js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> --}}
+{{-- <script src="{{ URL::asset('tim/js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>--}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 <script src="{{ URL::asset('tim/js/bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ URL::asset('tim/js/material.min.js') }}" type="text/javascript"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script> --}}
@@ -106,8 +105,6 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 <script src="{{ URL::asset('tim/js/perfect-scrollbar.jquery.min.js') }}"></script>
 <!--  Notifications Plugin    -->
 <script src="{{ URL::asset('tim/js/bootstrap-notify.js') }}"></script>
-<!-- Material Dashboard javascript methods -->
-<script src="{{ URL::asset('tim/js/material-dashboard.js?v=1.2.1') }}"></script>
 <!-- Material Dashboard DEMO methods, dont include it in your project -->
 <script src="{{ URL::asset('tim/js/demo.js') }}"></script>
 
@@ -116,14 +113,14 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
 <script src="{{ URL::asset('tim/js/moment.min.js') }}"></script>
 
-<!--   Sharrre Library    -->
-<script src="{{ URL::asset('tim/js/jquery.sharrre.js') }}"></script>
+<!--   Sharrre Library
+<script src="{{ URL::asset('tim/js/jquery.sharrre.js') }}"></script>-->
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
 <script src="{{ URL::asset('tim/js/bootstrap-datepicker.js') }}"></script>
 <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
 <script src="{{ URL::asset('tim/js/jquery-jvectormap.js') }}"></script>
 <!-- Sliders Plugin, full documentation here: https://refreshless.com/nouislider/ -->
-<script src="{{ URL::asset('tim/js/nouislider.min.js') }}"></script>
+
 <!--  Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
 <script src="{{ URL::asset('tim/js/jquery.select-bootstrap.js') }}"></script>
 <!--  DataTables.net Plugin, full documentation here: https://datatables.net/    -->
@@ -147,7 +144,6 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 <!-- END JAVASCRIPTS -->
 
 
-@stack('js')    
 </body>
 
 </html>

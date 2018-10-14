@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Recepcion;
 class LaboratorioController extends Controller
 {
@@ -14,8 +15,14 @@ class LaboratorioController extends Controller
     public function index()
     {
         //
-        $recepcion=Recepcion::all();
-        dd($recepcion);
+        
+        $recepcion = DB::table('tbrecepcion as re')
+                ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+                ->join('tbproducto as p','p.id', '=', 're.idProducto')
+                ->where('re.estado',0)
+                ->get();
+
+     
         return view('laboratorio.inicio',['recepcion'=> $recepcion]);
     }
 
@@ -85,5 +92,18 @@ class LaboratorioController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function listarLaboratorio(){
+         $recepcion = DB::table('tbrecepcion as re')
+                ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+                ->join('tbproducto as p','p.id', '=', 're.idProducto')
+                ->where('re.estado',0)
+                ->get();
+
+     
+        return view('laboratorio.laboratorio',['recepcion'=> $recepcion]);
+
     }
 }

@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,6 +162,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
 
     ],
 
@@ -215,6 +216,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
     ],
 
 ];

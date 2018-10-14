@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Folios extends Model
 {
-    public    $table      = 'tbfolios';
+    protected    $table      = 'tbfolios';
     
 }

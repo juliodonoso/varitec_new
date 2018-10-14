@@ -11,13 +11,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" data-background-color="green">
-                    <h4 class="title">Recepción</h4>
-                    <p class="category">Lista de Recepcion de Equipos</p>
+                    <h4 class="title">Laboratorio Trabajos</h4>
+                    <p class="category">Equipos en trabajos</p>
                 </div>
                 <div class="card-content">
                     <div class="col-md-10 ">
-                         <a href="Recepcion/create"  class="btn btn-primary btn-sm"  title="Add">   <i class="fa fa-plus"></i>
-                              Registrar
+                         <a href="#"  class="btn btn-primary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
+                              Equipos en Laboratorio
                           </a>
                     </div>
 
@@ -26,10 +26,10 @@
                                     <tr>
                                     <th>Numero Recepción</th>
                                     <th>Cliente</th>
-                                    <th>Rut</th>
-                                    <th>Producto</th>
-                                    <th>Fecha Recepción</th>
-                                    <th>Acciones</th>
+                                    <th>Codigo</th>
+                                    <th>Equipo</th>
+                                    <th>tipo de trabajo</th>
+                                    <th>Pasar a Laboratorio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -37,16 +37,16 @@
                                     <tr>
                                       <td>{{ $reg->numeroRecepcion }}</td>
                                       <td>{{ $reg->clNombre }}</td>
-                                      <td>{{ $reg->clRut }}</td>
-                                      <td>{{ $reg->idProducto }}</td>
-                                      <td>{{ $reg->fechaRecepcion }}</td>
+                                      <td>{{ $reg->prBarcode }}</td>
+                                      <td>{{ $reg->prNombre }}</td>
+                                      <td>{{ $reg->tipoTrabajo }}</td>
                                       <td> 
                                         <a href=""  class="btn btn-info btn-xs editereg" title="Ver">
-                                          <i class="fa fa-eye"></i>
+                                          <i class="fa fa-check-square-o"></i>
                                        </a>
 
-                                        <a href=""  class="btn btn-info btn-xs editereg" title="Anular">
-                                          <i class="fa fa-ban"></i>
+                                        <a href=""  class="btn btn-info btn-xs editereg" title="Ver">
+                                          <i class="fa fa-eye"></i>
                                        </a>
                                         </td>
                                     </tr>
