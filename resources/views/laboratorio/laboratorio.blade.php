@@ -11,35 +11,31 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" data-background-color="green">
-                    <h4 class="title">Laboratorio Trabajos</h4>
+                    <h4 class="title">Laboratorio</h4>
                     <p class="category">Equipos en trabajos</p>
                 </div>
                 <div class="card-content">
-                    <div class="col-md-10 ">
-                         <a href="#"  class="btn btn-primary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
-                              Equipos en Laboratorio
-                          </a>
-                    </div>
+               
 
                        <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                    <th>Numero Recepción</th>
+                                    <th>Numero laboratorio</th>
                                     <th>Cliente</th>
                                     <th>Codigo</th>
                                     <th>Equipo</th>
-                                    <th>tipo de trabajo</th>
-                                    <th>Pasar a Laboratorio</th>
+                                    <th>Tipo de trabajo</th>
+                                    <th>Gestion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @foreach($recepcion as $reg)
+                                   @foreach($laboratorio as $lab)
                                     <tr>
-                                      <td>{{ $reg->numeroRecepcion }}</td>
-                                      <td>{{ $reg->clNombre }}</td>
-                                      <td>{{ $reg->prBarcode }}</td>
-                                      <td>{{ $reg->prNombre }}</td>
-                                      <td>{{ $reg->tipoTrabajo }}</td>
+                                      <td>{{ $lab->numeroRecepcion }}</td>
+                                      <td>{{ $lab->clNombre }}</td>
+                                      <td>{{ $lab->prBarcode }}</td>
+                                      <td>{{ $lab->prNombre }}</td>
+                                      <td>{{ $lab->tipoTrabajo }}</td>
                                       <td> 
                                         <a href=""  class="btn btn-info btn-xs editereg" title="Ver">
                                           <i class="fa fa-check-square-o"></i>

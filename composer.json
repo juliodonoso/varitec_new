@@ -6,12 +6,12 @@
     "type": "project",
     "require": {
         "php": "^7.1.16",
+        "barryvdh/laravel-dompdf": "^0.8.3",
         "fideloper/proxy": "^4.0",
         "fzaninotto/faker": "^1.7",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
-        "niklasravnsborg/laravel-pdf": "^2.0",
         "realrashid/sweet-alert": "^1.1"
     },
     "require-dev": {

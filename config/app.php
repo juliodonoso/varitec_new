@@ -162,7 +162,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+      
 
     ],
 
@@ -216,7 +217,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        
     ],
 
 ];

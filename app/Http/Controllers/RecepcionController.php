@@ -11,6 +11,8 @@ use App\Folios;
 use App\Regiones;
 use App\Productos;
 use App\Image;
+
+use PDF;
 class RecepcionController extends Controller
 {
     /**
@@ -21,12 +23,12 @@ class RecepcionController extends Controller
     public function index()
     {
         //
-       
-        $recepcion = DB::table('tbRecepcion as re')
-                        ->join('tbCliente as cl', 'cl.id', '=', 're.idCliente')
+        $recepcion = DB::table('tbrecepcion as re')
+                        ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+                        ->select('re.id  as id','numeroRecepcion','clNombre','clRut','idProducto','fechaRecepcion')
                         ->where('re.estado',0)
                         ->get();
-
+        
         return view('recepcion.inicio',['recepcion'=>$recepcion]);
     }
 
@@ -79,6 +81,7 @@ class RecepcionController extends Controller
         $recepcion->contactoTecnico=$request->contacto;
         $recepcion->mailContacto=$request->emailContacto;
         $recepcion->tipoTrabajo=$request->tipoTrabajo;
+        $recepcion->descripcionVisual=$request->descripcionVisual;
         $recepcion->save();
 
         $folio->where('folioRecepcion',$recepcion->numeroRecepcion);
@@ -94,6 +97,7 @@ class RecepcionController extends Controller
         $recepcion->contactoTecnico=$request->contacto;
         $recepcion->mailContacto=$request->emailContacto;
         $recepcion->tipoTrabajo=$request->tipoTrabajo;
+         $recepcion->descripcionVisual=$request->descripcionVisual;
 
         $recepcion->save();            
         $folio->folioRecepcion=$request->numeroRecepcion+1;
@@ -171,4 +175,46 @@ class RecepcionController extends Controller
     {
         //
     }
+
+
+    /*
+    * anular registro recepcion
+    */
+    public function anular($id){
+        $recepcion = Recepcion::find($id);
+
+        $recepcion->estado = 99;
+        $recepcion->save();
+        return json_decode(true);
+    }
+
+   
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pdfview(Request $request)
+    {
+        $items = DB::table('tbrecepcion as re')
+                        ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+                        ->select('re.id  as id','numeroRecepcion','clNombre','clRut','idProducto','fechaRecepcion','tipoTrabajo','contactoTecnico','descripcionVisual')
+                        ->where('re.id',$request->id)
+                        ->where('re.estado',0)
+                        ->get()->first();
+        
+        //$items = DB::table("tbrecepcion")->get();
+                       
+        view()->share('items',$items);
+
+
+        if($request->has('download')){
+            $pdf = PDF::loadView('pdfview');
+            return $pdf->download('pdfview.pdf');
+        }
+
+
+        return view('pdfview');
+    }
+   
 }
