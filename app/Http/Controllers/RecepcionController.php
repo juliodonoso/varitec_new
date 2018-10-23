@@ -198,7 +198,19 @@ class RecepcionController extends Controller
     {
         $items = DB::table('tbrecepcion as re')
                         ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
-                        ->select('re.id  as id','numeroRecepcion','clNombre','clRut','idProducto','fechaRecepcion','tipoTrabajo','contactoTecnico','descripcionVisual')
+                        ->join('tbproducto as pr', 'pr.id' ,'=','re.idProducto')
+                        ->select('re.id  as id',
+                            'numeroRecepcion',
+                            'clNombre',
+                            'clRut',
+                            'idProducto',
+                            'fechaRecepcion',
+                            'tipoTrabajo',
+                            'contactoTecnico',
+                            'descripcionVisual',
+                            'pr.prNombre as nombreProducto',
+                            'prBarcode as codEquipo',
+                            'mailContacto')
                         ->where('re.id',$request->id)
                         ->where('re.estado',0)
                         ->get()->first();
