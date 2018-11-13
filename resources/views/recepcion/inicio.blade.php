@@ -80,11 +80,11 @@ function _anular(id){
                                       <td>{{ $reg->idProducto }}</td>
                                       <td>{{ $reg->fechaRecepcion }}</td>
                                       <td> 
-                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $reg->id]) }}"  class="btn btn-info btn-xs editereg" title="Ver">
+                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $reg->id]) }}"  class="btn btn-success btn-xs editereg" title="Ver">
                                           <i class="fa fa-eye"></i>
                                        </a>
 
-                                        <a href="javascript:_anular({{ $reg->id }})"  class="btn btn-info btn-xs editereg" title="Anular">
+                                        <a href="javascript:_anular({{ $reg->id }})"  class="btn btn-error btn-xs editereg" title="Anular">
                                           <i class="fa fa-ban"></i>
                                        </a>
                                         </td>

@@ -62,11 +62,13 @@ function _asignar(id){
                 </div>
                 <div class="card-content">
                     <div class="col-md-10 ">
-                         <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-primary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
-                              Equipos en transito laboratorio
+                         <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-primary btn-sm"  title="Add">   <i class=" fa fa-sign-in"></i>
+                              laboratorio trabajando
+                          </a>
+                          <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-secondary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
+                              laboratorio pendientes
                           </a>
                     </div>
-                      
                        <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
@@ -87,11 +89,11 @@ function _asignar(id){
                                       <td>{{ $reg->prNombre }}</td>
                                       <td>{{ $reg->tipoTrabajo }}</td>
                                       <td> 
-                                        <a href="javascript: _asignar({{ $reg->id }})"  class="btn btn-info btn-xs editereg" title="Traspaso">
+                                        <a href="javascript: _asignar({{ $reg->id }})"  class="btn btn-success btn-xs editereg" title="Traspaso">
                                           <i class="fa fa-check-square-o"></i>
                                        </a>
 
-                                        <a href=""  class="btn btn-info btn-xs editereg" title="Ver">
+                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $reg->id]) }}""  class="btn btn-error btn-xs editereg" title="Ver">
                                           <i class="fa fa-eye"></i>
                                        </a>
                                         </td>

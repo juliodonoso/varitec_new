@@ -38,7 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pdfview',array('as'=>'pdfview','uses'=>'RecepcionController@pdfview'));
     Route::get('/Recepcion/anular/{id}','RecepcionController@anular')->name('Recepcion.anular');
     Route::get('/Laboratorio/listarLaboratorio','LaboratorioController@listarPreLaboratorio')->name('Laboratorio.listar');
-    Route::get('/Laboratorio/traspaso/{id}','LaboratorioController@traspasoLaboratorio')->name('Laboratorio.trasaso');
+    Route::get('/Laboratorio/traspaso/{id}','LaboratorioController@traspasoLaboratorio')->name('Laboratorio.traspaso');
+    Route::get('/Laboratorio/gestion/{id}','LaboratorioController@gestion')->name('Laboratorio.gestion');
     Route::resource('Laboratorio','LaboratorioController');
     
     Route::resource('Bodega','BodegaController');

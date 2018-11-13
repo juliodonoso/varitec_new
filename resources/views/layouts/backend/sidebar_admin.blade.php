@@ -60,8 +60,8 @@
                     </li>                   
 @endif                    
 @if ( Auth::user()->rol_id == 1 )  
-
-                    <li class="{{-- ( $menu == "m_Iven") ? "active" : "" --}}">
+                        <li class="{{-- ( $menu == "m_Iven") ? "active" : "" --}}">
+                        
                         <a data-toggle="collapse" aria-expanded="{{-- ( $menu == "m_Iven") ? "true" : "false" --}}" href="#menuInformes">
                             <i class="material-icons">content_paste</i>
                             <p> Tablas
@@ -135,31 +135,31 @@
 
                         </div>    
                     </li>
-
-                      <li>
+                       <li>
                         <a href="{{route('Recepcion.index')}}">
                             <i class="material-icons">input</i>
                             <p> Recepcion </p>
                         </a>
-                    </li>  
+                        </li>  
                     
-                    <li>
-                        <a data-toggle="" aria-expanded="" href="#menuRecepcion">
-                            <i class="material-icons">import_contacts</i>
-                            <p> Cotizaciòn y Diagnostico  </p>
-                        </a>
-                    </li>                         
-                    
-                    <li>
+                     <li>
                         <a href="{{route('Laboratorio.index')}}">
                             <i class="material-icons"  >group_work</i>
                             <p> Laboratorio </p>
                         </a>
-                    </li>                        
+                    </li> 
+
+                     <li>
+                        <a data-toggle="" aria-expanded="" href="#menuRecepcion">
+                            <i class="material-icons">import_contacts</i>
+                            <p> Cotizaciòn</p>
+                        </a>
+                    </li>  
+
                     
                                     
 
-                    <li {{--class="{{ ( $menu == "m_uadm" || $menu == "m_user") ? "active" : "" }} --}} ">
+                    <li {{--class="{{ ( $menu == "m_uadm" || $menu == "m_user") ? "active" : "" }} --}} >
                         <a data-toggle="collapse" aria-expanded="{{-- ( $menu == "m_uadm" || $menu == "m_user") ? "true" : "false" --}}  " href="#menuTablas">
                             <i class="material-icons">settings</i>
                             <p> Configuración

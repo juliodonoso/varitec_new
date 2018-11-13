@@ -100,12 +100,13 @@ class LaboratorioController extends Controller
 
     public function listarPreLaboratorio(){
          $laboratorio = DB::table('tbllaboratorio as lab')
-                ->join('tbrecepcion as re','re.id','=','lab.id')
-                ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
-                ->join('tbproducto as p','p.id', '=', 're.idProducto')
+                ->leftJoin('tbrecepcion as re','re.id','=','lab.idRecepcion')
+                ->leftJoin('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+                ->leftJoin('tbproducto as p','p.id', '=', 're.idProducto')
                 ->where('lab.estado',0)
+                ->select('lab.id','clNombre','lab.numeroLaboratorio as numeroLaboratorio','p.prBarcode as prBarcode','p.prNombre','re.tipoTrabajo')
                 ->get();
-              
+             
         return view('laboratorio.laboratorio',['laboratorio'=> $laboratorio]);
     }
 
@@ -120,10 +121,10 @@ class LaboratorioController extends Controller
         $recepcion->estado = 1;
         /* buscar numero laboratorio*/        
 
-        $folio=$folio->select('folioLaboratorio')->get()->first();
-            
-        /* setear variables laboratorio*/      
-        $laboratorio->numeroLaboratorio=$folio->folioLAboratorio+1;
+        $nf=$folio->where('id',1)->get();
+      
+        /* setear variables laboratorio*/ 
+        $laboratorio->numeroLaboratorio=$nf[0]->folioLaboratorio+1;
         $laboratorio->idRecepcion=$recepcion->id;
         $laboratorio->idProducto=$recepcion->idProducto;
         $laboratorio->descripcion='';
@@ -134,14 +135,77 @@ class LaboratorioController extends Controller
 
 
         // setear folio 
-        $folio->folioLAboratorio=$folio->folioLAboratorio+1;
+        //$folio->where('folioLaboratorio',$folioNumero->folioLaboratorio);
+        $n=$nf[0]->folioLaboratorio+1;
+        DB::table('tbfolios')
+            ->where('id', 1)
+            ->update(['folioLaboratorio' => $n]);
+
         
+        //dd($folio->folioLaboratorio);
         //guardar
         $recepcion->save();
-        $folio->save();
         $laboratorio->save();
 
         return json_decode(true);
+    }
+
+     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pdfRecepcion(Request $request)
+    {
+        $items = DB::table('tbrecepcion as re')
+                        ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+                        ->join('tbproducto as pr', 'pr.id' ,'=','re.idProducto')
+                        ->select('re.id  as id',
+                            'numeroRecepcion',
+                            'clNombre',
+                            'clRut',
+                            'idProducto',
+                            'fechaRecepcion',
+                            'tipoTrabajo',
+                            'contactoTecnico',
+                            'descripcionVisual',
+                            'pr.prNombre as nombreProducto',
+                            'prBarcode as codEquipo',
+                            'mailContacto')
+                        ->where('re.id',$request->id)
+                        ->where('re.estado',0)
+                        ->get()->first();
+        
+        //$items = DB::table("tbrecepcion")->get();
+                       
+        view()->share('items',$items);
+
+
+        if($request->has('download')){
+            $pdf = PDF::loadView('pdfview');
+            $namePdf = 'Recepcion-'.$items->numeroRecepcion.'.pdf';
+            return $pdf->download($namePdf);
+        }
+
+
+        return view('pdfview');
+    }
+
+    public function gestion($id){
+
+
+        $laboratorio =DB::table('tbllaboratorio as lab')
+        ->join('tbrecepcion as res','lab.idRecepcion','=','res.id')
+        ->join('tbcliente as cl','cl.id','=','res.idCliente')
+        ->where('lab.id',$id)
+        ->select('lab.*','res.*','cl.*')
+        ->get();
+        //$imagen =
+
+         return view('laboratorio.gestion',[
+                    'laboratorio'=>$laboratorio,
+                    'imagen' => ''
+            ]);
     }
 
 }

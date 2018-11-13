@@ -28,7 +28,7 @@ class RecepcionController extends Controller
                         ->select('re.id  as id','numeroRecepcion','clNombre','clRut','idProducto','fechaRecepcion')
                         ->where('re.estado',0)
                         ->get();
-        
+       
         return view('recepcion.inicio',['recepcion'=>$recepcion]);
     }
 
@@ -222,7 +222,8 @@ class RecepcionController extends Controller
 
         if($request->has('download')){
             $pdf = PDF::loadView('pdfview');
-            return $pdf->download('pdfview.pdf');
+            $namePdf = 'Recepcion-'.$items->numeroRecepcion.'.pdf';
+            return $pdf->download($namePdf);
         }
 
 
