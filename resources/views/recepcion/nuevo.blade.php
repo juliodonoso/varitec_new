@@ -105,7 +105,44 @@ $("body").on("click",".btn-danger",function(){
 <div class="content" >
   <div class="container-fluid" ng-init="getConsultaUsers(1); setRolUser(1)">
     <div class="row">
-     
+      <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-header" data-background-color="green">
+                <h4 class="title">Recepción</h4>
+                <p class="category">Existencia</p>
+            </div>
+
+            <div class="card-content">
+                <div class="content">
+                    <div class="col-md-6">  
+                        <div class="form-group">
+                          <label for="serie">Numero de Serie</label>
+                          {{Form::text('serie','',['placeholder' => 'Ingrese codigo de barra','class' => 'form-control', 'id' => 'serie','required'])}}
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">  
+                        <div class="form-group">
+                          <label for="equipo">Descripción Equipo</label>
+                          {{Form::text('descripcionEquipo',null,['class' => 'form-control', 'id' => 'descripcionEquipo','required','disabled']) }}
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">  
+                        <div class="form-group">
+                          <label for="modelo">Modelo Equipo</label>
+                          {{Form::text('modeloEquipo',null,['class' => 'form-control', 'id' => 'modeloEquipo','required','disabled'])}}
+                         
+                        </div>
+                      </div>
+
+
+                </div>
+            </div>
+
+        </div>
+      </div>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" data-background-color="green">
@@ -211,28 +248,7 @@ $("body").on("click",".btn-danger",function(){
                           </div>
                         </div>
 
-                        <div class="col-md-6">  
-                          <div class="form-group">
-                            <label for="serie">Numero de Serie</label>
-                            {{Form::text('serie',null,['class' => 'form-control', 'id' => 'serie','required'])}}
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">  
-                          <div class="form-group">
-                            <label for="equipo">Descripción Equipo</label>
-                            {{Form::text('descripcionEquipo',null,['class' => 'form-control', 'id' => 'descripcionEquipo','required','disabled']) }}
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">  
-                          <div class="form-group">
-                            <label for="modelo">Modelo Equipo</label>
-                            {{Form::text('modeloEquipo',null,['class' => 'form-control', 'id' => 'modeloEquipo','required','disabled'])}}
-                           
-                          </div>
-                        </div>
-
+                        
                         
 
 

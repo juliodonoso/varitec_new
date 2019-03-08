@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 use App\Recepcion;
 use App\Folios;
 use App\Laboratorio;
+use App\Image;
+use App\Suministros;
+use Illuminate\Support\Facades\Mail;
+
 class LaboratorioController extends Controller
 {
     /**
@@ -72,6 +76,39 @@ class LaboratorioController extends Controller
     public function edit($id)
     {
         //
+        $lab = Laboratorio::find($id);
+        $lab->estado=1;
+        $lab->save();
+        //return view('laboratorio.laboratorio',['laboratorio'=> $laboratorio,'titulo'=>$titulo]);
+
+    }
+
+    public function aceptadas($id)
+    {
+        //enviar mail con confirmación
+        $lab = Laboratorio::find($id);
+        $lab->estado=2;
+        //dd($lab->idRecepcion);
+        $res = Recepcion::find($lab->idRecepcion);
+
+        Mail::send('mailVaritec', array(
+        'name'=>"name", 
+        "body" => "Body of email.",
+        "titulo"=>"Laboratorio",
+        "subTitulo"=>"Orden Laboratorio",
+        "nombre"=>"julio",
+        "rut"=>"1111",
+        "numero"=>"999"
+        )
+        , function($message) {
+            $message->to('mario@svent.cl', 'Mario Vofs')
+                    ->subject('Orden Laboratorio');
+            $message->from('jdonoso@ipconfig.cl','Gestion Varitec');
+        });
+        $lab->save();
+        //envio correo 
+        //return view('laboratorio.laboratorio',['laboratorio'=> $lab,'titulo'=>$titulo]);
+
     }
 
     /**
@@ -84,6 +121,10 @@ class LaboratorioController extends Controller
     public function update(Request $request, $id)
     {
         //
+        echo $request;
+       echo $id;
+
+
     }
 
     /**
@@ -104,11 +145,29 @@ class LaboratorioController extends Controller
                 ->leftJoin('tbcliente as cl', 'cl.id', '=', 're.idCliente')
                 ->leftJoin('tbproducto as p','p.id', '=', 're.idProducto')
                 ->where('lab.estado',0)
-                ->select('lab.id','clNombre','lab.numeroLaboratorio as numeroLaboratorio','p.prBarcode as prBarcode','p.prNombre','re.tipoTrabajo')
+                ->select('lab.id','clNombre','lab.numeroLaboratorio as numeroLaboratorio','p.prBarcode as prBarcode','p.prNombre','re.tipoTrabajo','re.id as idRes','lab.estado as estadoLab')
                 ->get();
              
-        return view('laboratorio.laboratorio',['laboratorio'=> $laboratorio]);
+        return view('laboratorio.laboratorio',['laboratorio'=> $laboratorio,'titulo'=>'Activas']);
     }
+
+    public function listarLaboratorio($id){
+        $laboratorio = DB::table('tbllaboratorio as lab')
+               ->leftJoin('tbrecepcion as re','re.id','=','lab.idRecepcion')
+               ->leftJoin('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+               ->leftJoin('tbproducto as p','p.id', '=', 're.idProducto')
+               ->where('lab.estado',$id)
+               ->select('lab.id','clNombre','lab.numeroLaboratorio as numeroLaboratorio','p.prBarcode as prBarcode','p.prNombre','re.tipoTrabajo','re.id as idRes','lab.estado as estadoLab')
+               ->get();
+        $titulo =  "Activas";    
+        if($id == 1){
+            $titulo =  "Borrador";
+        }elseif($id == 2){
+            $titulo =  "Terminadas";
+        }
+            
+       return view('laboratorio.laboratorio',['laboratorio'=> $laboratorio,'titulo'=>$titulo]);
+   }
 
     public function traspasoLaboratorio($id){
   
@@ -198,14 +257,36 @@ class LaboratorioController extends Controller
         ->join('tbrecepcion as res','lab.idRecepcion','=','res.id')
         ->join('tbcliente as cl','cl.id','=','res.idCliente')
         ->where('lab.id',$id)
-        ->select('lab.*','res.*','cl.*')
+        ->select('lab.id as idLab','lab.*','res.*','cl.*')
         ->get();
-        //$imagen =
+        
 
+        $imagen = new Image();
+        
+        $imagenes=$imagen->where('idTabla',$laboratorio[0]->idRecepcion)
+        ->where('tabla','tbrecepcion')
+        ->select('name','src','folder')
+        ->get();
+
+
+        $suministros= new Suministros();
+        //dd( $suministros->all());
          return view('laboratorio.gestion',[
                     'laboratorio'=>$laboratorio,
-                    'imagen' => ''
+                    'imagen' => $imagenes,
+                    'suministros' => $suministros->all()
             ]);
+
+    }
+
+
+    public function enviarMail(){
+        
+        Mail::send('mailVaritec', array('name'=>"name", "body" => "Body of email."), function($message) {
+            $message->to('puyol.22@hotmail.com', 'Example')
+                    ->subject('Subject for example');
+            $message->from('jdonoso@ipconfig.cl','Messagge from example');
+        });
     }
 
 }

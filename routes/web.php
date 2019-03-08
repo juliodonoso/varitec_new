@@ -38,17 +38,36 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pdfview',array('as'=>'pdfview','uses'=>'RecepcionController@pdfview'));
     Route::get('/Recepcion/anular/{id}','RecepcionController@anular')->name('Recepcion.anular');
     Route::get('/Laboratorio/listarLaboratorio','LaboratorioController@listarPreLaboratorio')->name('Laboratorio.listar');
+    Route::get('/Laboratorio/laboratorioListar/{id}','LaboratorioController@listarLaboratorio')->name('Laboratorio.estados');
     Route::get('/Laboratorio/traspaso/{id}','LaboratorioController@traspasoLaboratorio')->name('Laboratorio.traspaso');
     Route::get('/Laboratorio/gestion/{id}','LaboratorioController@gestion')->name('Laboratorio.gestion');
+    Route::get('/Laboratorio/{id}/aceptar','LaboratorioController@aceptadas')->name('Laboratorio.aceptar');
+    Route::get('/Laboratorio/mail','Laboratorio@enviarMail')->name('Laboratorio.mail');
     Route::resource('Laboratorio','LaboratorioController');
     
-    Route::resource('Bodega','BodegaController');
+    //Route::get('/bodega/agregar','BodegasController@add')->name('bodega.add');
+    //Route::resource('Bodega','BodegaController');
     Route::resource('Clientes','ClientesController');
     Route::resource('Productos','ProductosController');
     Route::resource('Proveedores','ProveedoresController');
     Route::resource('Provincias','ProvinciasController');
     Route::resource('Regiones','RegionesController');
     Route::resource('Comunas','ComunasController');
+    Route::resource('image','ImageController');
+    Route::get('/Suministros/mostrar/','SuministrosController@mostrar')->name('suministros.mostrar');
+    Route::get('/Suministros/listar','SuministrosController@getSuministros')->name('suministros.listar');
+    Route::get('/Suministros/solicitud','SuministrosController@solicitud')->name('suministros.solicitud');
+    Route::get('/Suministros/add','SuministrosController@add')->name('suministros.add');
+    Route::get('/Suministros/getCantidad/{id}','SuministrosController@consultarCantidad')->name('suministros.cantidad');
+    //consultarCantidad
+    Route::resource('suministros','SuministrosController');
+    /* cotizaciones  */
+    
+    
+    Route::get('/cotizaciones/mostrar/','CotizacionesController@mostrar')->name('cotizaciones.mostrar');
+    Route::get('/cotizaciones/teminadas','CotizacionesController@cotizacionesTerminadas')->name('cotizaciones.terminadas');
+    Route::get('cotizaciones/pendientes','CotizacionesController@cotizacionesPendientes')->name('cotizaciones.pendientes');
+    Route::resource('cotizaciones','CotizacionesController');
     Route::prefix('ajax')->group(function () {
     Route::get('provinciasAjax/{id}','ProvinciasController@findProvincias');
     Route::get('comunasAjax/{id}','ComunasController@findComunas');

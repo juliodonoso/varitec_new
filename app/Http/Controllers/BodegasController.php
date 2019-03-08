@@ -72,4 +72,8 @@ class BodegasController extends Controller
         'bgNombre' => "required|string|max:40",
       ]);
     }
+
+    public function add(){
+      return view('Bodegas.add');
+    }
 }

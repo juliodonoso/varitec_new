@@ -61,13 +61,18 @@ function _asignar(id){
                     <p class="category">Traspaso recepción a laboratorio</p>
                 </div>
                 <div class="card-content">
-                    <div class="col-md-10 ">
+                    <div class="col-md-12 ">
                          <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-primary btn-sm"  title="Add">   <i class=" fa fa-sign-in"></i>
-                              laboratorio trabajando
+                              Laboratorio 
                           </a>
-                          <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-secondary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
-                              laboratorio pendientes
+                          <a href="{{ asset('/Laboratorio/laboratorioListar/2') }}"  class="btn btn-success btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
+                              Terminadas
                           </a>
+
+                          <a href="{{ asset('/Laboratorio/laboratorioListar/1') }}"  class="btn btn-secondary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
+                              Borrador
+                          </a>
+
                     </div>
                        <table class="table table-hover table-condensed">
                                 <thead>
@@ -93,7 +98,7 @@ function _asignar(id){
                                           <i class="fa fa-check-square-o"></i>
                                        </a>
 
-                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $reg->id]) }}""  class="btn btn-error btn-xs editereg" title="Ver">
+                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $reg->id]) }}"  class="btn btn-error btn-xs editereg" title="Ver">
                                           <i class="fa fa-eye"></i>
                                        </a>
                                         </td>

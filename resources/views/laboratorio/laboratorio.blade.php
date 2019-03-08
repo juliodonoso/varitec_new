@@ -12,7 +12,8 @@
             <div class="card">
                 <div class="card-header" data-background-color="green">
                     <h4 class="title">Laboratorio</h4>
-                    <p class="category">Equipos en Dieagnostico</p>
+                    <p class="category">{{$titulo}}</p>
+                    
                 </div>
                 <div class="card-content">
                
@@ -37,11 +38,13 @@
                                       <td>{{ $lab->prNombre }}</td>
                                       <td>{{ $lab->tipoTrabajo }}</td>
                                       <td> 
+
+                                       @if($lab->estadoLab != 2)
                                         <a href="{{ route('Laboratorio.gestion',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Gestion">
                                           <i class="fa fa-share-square-o"></i>
                                        </a>
-
-                                        <a href=""  class="btn btn-info btn-xs editereg" title="Ver">
+                                       @endif
+                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $lab->idRes]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="Anular">
                                           <i class="fa fa-eye"></i>
                                        </a>
                                         </td>

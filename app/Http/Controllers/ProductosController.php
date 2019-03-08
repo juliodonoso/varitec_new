@@ -84,12 +84,14 @@ $prod->prBodega = $request->get('prBodega');
 $prod->save();
 return redirect()->route('Productos.index')->with('msg-success','Actualizado Exitosamente.!');
 }
+
 public function destroy($id)
 {
 $data = Productos::find($id);
 Productos::destroy($id);
 return redirect()->route('Productos.index')->with('msg-error', 'Eliminado Exitosamente');
 }
+
 protected function validator(array $data)
 {
 return Validator::make($data,[
@@ -108,7 +110,6 @@ return Validator::make($data,[
 
 public function find($serie){
 $data = Productos::where('prBarcode', $serie)->get();
-//dd($data);
 if($data->count() > 0)
 return response()->json($data);
 else

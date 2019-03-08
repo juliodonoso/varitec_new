@@ -102,6 +102,11 @@
                          <a href=""  data-ruta="{{url('Productos/')}}" class="btn btn-primary btn-sm createprod" data-toggle="modal" data-target="#createprod" title="Add">   <i class="fa fa-plus"></i>
                               Registrar
                           </a>
+
+                          <a href="{{URL::previous()}}"   class="btn btn-primary btn-sm createprod"  title="Volver">   <i class="fa fa-reply"></i>
+                            Volver
+                        </a>
+                          
                     </div>
 
                         <table class="table table-hover table-condensed">

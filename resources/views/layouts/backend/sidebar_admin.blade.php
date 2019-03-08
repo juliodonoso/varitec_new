@@ -71,9 +71,9 @@
                         <div class="collapse {{-- ( $menu == "m_Iven")? "in" : ""--}}" id="menuInformes" style="margin-left: 30px;">
                             <ul class="nav" >
                                 <li class="{{-- ( $menu == "m_Idin")? "active" : "" --}}">
-                                    <a href="#">
+                                    <a href="{{Route('suministros.index')}}">
                                         <span class="sidebar-mini">B</span>
-                                        <span class="sidebar-normal">Bodegas</span>
+                                        <span class="sidebar-normal">Suministros</span>
                                     </a>
                                 </li>
                             </ul>
@@ -150,7 +150,7 @@
                     </li> 
 
                      <li>
-                        <a data-toggle="" aria-expanded="" href="#menuRecepcion">
+                        <a  href="{{route('cotizaciones.index')}}">
                             <i class="material-icons">import_contacts</i>
                             <p> Cotizaciòn</p>
                         </a>

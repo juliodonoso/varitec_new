@@ -11,6 +11,7 @@ use App\Folios;
 use App\Regiones;
 use App\Productos;
 use App\Image;
+use App\Suministros;
 
 use PDF;
 class RecepcionController extends Controller
@@ -42,8 +43,11 @@ class RecepcionController extends Controller
         //
         $folio = Folios::all();
         $regiones = Regiones::select('id','rgnombre')->get()->pluck('rgnombre','id');
+        $productos =  Productos::all();
+        $arrayProductos = $productos->pluck('prBarcode', 'id')->toArray();
+        $arrayProductos[]='Nuevo Suministro';
         
-        return view('recepcion.nuevo',['folioRecepcion' => $folio[0]->folioRecepcion,'regiones'=>$regiones]);
+        return view('recepcion.nuevo',['folioRecepcion' => $folio[0]->folioRecepcion,'regiones'=>$regiones,'productos'=>$arrayProductos]);
     }
 
     /**
@@ -54,12 +58,11 @@ class RecepcionController extends Controller
      */
     public function store(Request $request)
     {
-        
         $recepcion= new Recepcion();
         $cliente =  new Clientes();
         $producto =  new productos();
         $imagen = new Image();
-        $folio = new Folios();
+        $folio =  Folios::find(1);
 
         if($request->clienteNuevo == "false"){
         $cliente->clRut=$request->rutCliente;
@@ -73,8 +76,9 @@ class RecepcionController extends Controller
         $cliente->clEmail=$request->email;
         $cliente->clContactoMail=$request->emailContacto;
         $cliente->save();
-        
+        dd($request->idProducto);
         $recepcion->idCliente=$cliente->id;
+       
         $recepcion->idProducto=$request->idProducto;
         $recepcion->numeroRecepcion=$request->numeroRecepcion;
         $recepcion->fechaRecepcion=$request->fechaRecepcion;
@@ -84,11 +88,11 @@ class RecepcionController extends Controller
         $recepcion->descripcionVisual=$request->descripcionVisual;
         $recepcion->save();
 
-        $folio->where('folioRecepcion',$recepcion->numeroRecepcion);
+        //$folio->where('folioRecepcion',$recepcion->numeroRecepcion);
         $folio->folioRecepcion=$request->numeroRecepcion+1;
         $folio->save();
         }else{
-        
+            dd($request->idProducto);
         $idCliente=$cliente->where('clRut',str_replace('.','',$request->rutCliente))->get();
         $recepcion->idCliente=$idCliente[0]->id;
         $recepcion->idProducto=$request->idProducto;
