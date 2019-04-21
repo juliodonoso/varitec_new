@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Varitec</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />   
+    <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
     <link href="{{ URL::asset('tim/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
@@ -21,8 +21,8 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 {{--
 <link rel="stylesheet" href="{{ URL::asset('/bower_components/angular-datatables/dist/css/angular-datatables.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/bower_components/datatables.net-dt/css/jquery.dataTables.css') }}"> 
-<link rel="stylesheet" href="{{ URL::asset('/bower_components/angular-bootstrap/ui-bootstrap-csp.css') }}">     
+<link rel="stylesheet" href="{{ URL::asset('/bower_components/datatables.net-dt/css/jquery.dataTables.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/bower_components/angular-bootstrap/ui-bootstrap-csp.css') }}">
 --}}
 </head>
 
@@ -69,31 +69,31 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
     <div class="wrapper">
 
         @if(Auth::user()->rol_id == 1)
-            @include('layouts.backend.sidebar_admin')            
+            @include('layouts.backend.sidebar_admin')
         @elseif(Auth::user()->rol_id == 2)
             @include('layouts.backend.sidebar_admin')
         @endif
 
 
         <div class="main-panel">
-            
+
             @include('layouts.backend.header')
 
             <div class="content">
                 <div class="container-fluid" style="min-height: 450px;">
 
                     @yield('content')
-                    
+
                 </div>
             </div>
-            
+
             @include('layouts.backend.footer')
 
         </div>
     </div>
 <!--   Core JS Files   -->
 {{-- <script src="{{ URL::asset('tim/js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>--}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{ URL::asset('tim/js/bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ URL::asset('tim/js/material.min.js') }}" type="text/javascript"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script> --}}
@@ -130,16 +130,19 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
 <script src="{{ URL::asset('tim/js/fullcalendar.min.js') }}"></script>
 {{--
-<script src="{{ URL::asset('/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>   
+<script src="{{ URL::asset('/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ URL::asset('/bower_components/angular/angular.min.js') }}"></script>
 <script src="{{ URL::asset('/bower_components/angular-datatables/dist/angular-datatables.min.js') }}"></script>
 
 <script src="{{ URL::asset('/bower_components/angular-bootstrap/ui-bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js') }}"></script>
-<!-- Angular Controllers -->
+ Angular Controllers
 
-  <script src="{{ URL::asset('/angularController/appController.js') }}"></script>
---}}
+  <script src="{{ URL::asset('/angularController/appController.js') }}"></script>--}}
+
+
+
+
    @stack('js')
 <!-- END JAVASCRIPTS -->
 

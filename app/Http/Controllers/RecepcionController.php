@@ -2,236 +2,218 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-
-use Illuminate\Http\Request;
 use App\Clientes;
-use App\Recepcion;
 use App\Folios;
-use App\Regiones;
-use App\Productos;
 use App\Image;
-use App\Suministros;
-
+use App\Productos;
+use App\Recepcion;
+use App\Regiones;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
-class RecepcionController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        $recepcion = DB::table('tbrecepcion as re')
-                        ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
-                        ->select('re.id  as id','numeroRecepcion','clNombre','clRut','idProducto','fechaRecepcion')
-                        ->where('re.estado',0)
-                        ->get();
-       
-        return view('recepcion.inicio',['recepcion'=>$recepcion]);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        $folio = Folios::all();
-        $regiones = Regiones::select('id','rgnombre')->get()->pluck('rgnombre','id');
-        $productos =  Productos::all();
-        $arrayProductos = $productos->pluck('prBarcode', 'id')->toArray();
-        $arrayProductos[]='Nuevo Suministro';
-        
-        return view('recepcion.nuevo',['folioRecepcion' => $folio[0]->folioRecepcion,'regiones'=>$regiones,'productos'=>$arrayProductos]);
-    }
+class RecepcionController extends Controller {
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index() {
+		//
+		$recepcion = DB::table('tbrecepcion as re')
+			->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+			->select('re.id  as id', 'numeroRecepcion', 'clNombre', 'clRut', 'idProducto', 'fechaRecepcion')
+			->where('re.estado', 0)
+			->get();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $recepcion= new Recepcion();
-        $cliente =  new Clientes();
-        $producto =  new productos();
-        $imagen = new Image();
-        $folio =  Folios::find(1);
+		return view('recepcion.inicio', ['recepcion' => $recepcion]);
+	}
 
-        if($request->clienteNuevo == "false"){
-        $cliente->clRut=$request->rutCliente;
-        $cliente->clNombre=$request->cliente;
-        $cliente->clTelefono=$request->telefono;
-        $cliente->clDireccion=$request->direccion;
-        //$cliente->=$request->region;
-        $cliente->clCiudad=$request->provincia;
-        $cliente->clComuna=$request->comuna;
-        $cliente->clContacto=$request->contacto;
-        $cliente->clEmail=$request->email;
-        $cliente->clContactoMail=$request->emailContacto;
-        $cliente->save();
-        dd($request->idProducto);
-        $recepcion->idCliente=$cliente->id;
-       
-        $recepcion->idProducto=$request->idProducto;
-        $recepcion->numeroRecepcion=$request->numeroRecepcion;
-        $recepcion->fechaRecepcion=$request->fechaRecepcion;
-        $recepcion->contactoTecnico=$request->contacto;
-        $recepcion->mailContacto=$request->emailContacto;
-        $recepcion->tipoTrabajo=$request->tipoTrabajo;
-        $recepcion->descripcionVisual=$request->descripcionVisual;
-        $recepcion->save();
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create() {
+		//
+		$folio = Folios::all();
+		$regiones = Regiones::select('id', 'rgnombre')->get()->pluck('rgnombre', 'id');
+		$productos = Productos::all();
+		$arrayProductos = $productos->pluck('prBarcode', 'id')->toArray();
+		$arrayProductos[] = 'Nuevo Suministro';
 
-        //$folio->where('folioRecepcion',$recepcion->numeroRecepcion);
-        $folio->folioRecepcion=$request->numeroRecepcion+1;
-        $folio->save();
-        }else{
-            dd($request->idProducto);
-        $idCliente=$cliente->where('clRut',str_replace('.','',$request->rutCliente))->get();
-        $recepcion->idCliente=$idCliente[0]->id;
-        $recepcion->idProducto=$request->idProducto;
-        $recepcion->numeroRecepcion=$request->numeroRecepcion;
-        $recepcion->fechaRecepcion=$request->fechaRecepcion;
-        $recepcion->contactoTecnico=$request->contacto;
-        $recepcion->mailContacto=$request->emailContacto;
-        $recepcion->tipoTrabajo=$request->tipoTrabajo;
-         $recepcion->descripcionVisual=$request->descripcionVisual;
+		return view('recepcion.nuevo', ['folioRecepcion' => $folio[0]->folioRecepcion, 'regiones' => $regiones, 'productos' => $arrayProductos]);
+	}
 
-        $recepcion->save();            
-        $folio->folioRecepcion=$request->numeroRecepcion+1;
-        $folio->save();
-        }
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request) {
+		$recepcion = new Recepcion();
+		$cliente = new Clientes();
+		$producto = new productos();
+		$imagen = new Image();
+		$folio = Folios::find(1);
 
-        $tabla = "tbrecepcion";
+		if ($request->clienteNuevo == "false") {
+			$cliente->clRut = $request->rutCliente;
+			$cliente->clNombre = $request->cliente;
+			$cliente->clTelefono = $request->telefono;
+			$cliente->clDireccion = $request->direccion;
+			//$cliente->=$request->region;
+			$cliente->clCiudad = $request->provincia;
+			$cliente->clComuna = $request->comuna;
+			$cliente->clContacto = $request->contacto;
+			$cliente->clEmail = $request->email;
+			$cliente->clContactoMail = $request->emailContacto;
+			$cliente->save();
+			//dd($request->idProducto);
+			$recepcion->idCliente = $cliente->id;
 
+			$recepcion->idProducto = $request->idProducto;
+			$recepcion->numeroRecepcion = $request->numeroRecepcion;
+			$recepcion->fechaRecepcion = $request->fechaRecepcion;
+			$recepcion->contactoTecnico = $request->contacto;
+			$recepcion->mailContacto = $request->emailContacto;
+			$recepcion->tipoTrabajo = $request->tipoTrabajo;
+			$recepcion->descripcionVisual = $request->descripcionVisual;
+			$recepcion->save();
 
-         if($request->hasfile('filenames'))
-         {
-            foreach($request->file('filenames') as $file)
-            {
-                $name=$file->getClientOriginalName();
-                $file->move(public_path().'/storage/recepcion/', $name);  
-                $data[] = $name;
+			//$folio->where('folioRecepcion',$recepcion->numeroRecepcion);
+			$folio->folioRecepcion = $request->numeroRecepcion + 1;
+			$folio->save();
+		} else {
+			dd($request->idProducto);
+			$idCliente = $cliente->where('clRut', str_replace('.', '', $request->rutCliente))->get();
+			$recepcion->idCliente = $idCliente[0]->id;
+			$recepcion->idProducto = $request->idProducto;
+			$recepcion->numeroRecepcion = $request->numeroRecepcion;
+			$recepcion->fechaRecepcion = $request->fechaRecepcion;
+			$recepcion->contactoTecnico = $request->contacto;
+			$recepcion->mailContacto = $request->emailContacto;
+			$recepcion->tipoTrabajo = $request->tipoTrabajo;
+			$recepcion->descripcionVisual = $request->descripcionVisual;
 
-                $imagen->name=$name;
-                $imagen->folder='recepcion';
-                $imagen->src=public_path().'/storage/';
-                $imagen->tabla=$tabla;
-                $imagen->idTabla=$recepcion->id;  
-                $imagen->save();
-            }
-            
-         }
+			$recepcion->save();
+			$folio->folioRecepcion = $request->numeroRecepcion + 1;
+			$folio->save();
+		}
 
-         $arrayRecepcion = $recepcion->all();
+		$tabla = "tbrecepcion";
 
-         return view('recepcion.inicio',['recepcion'=>$arrayRecepcion]);
-        
-    }
+		if ($request->hasfile('filenames')) {
+			foreach ($request->file('filenames') as $file) {
+				$name = $file->getClientOriginalName();
+				$file->move(public_path() . '/storage/recepcion/', $name);
+				$data[] = $name;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+				$imagen->name = $name;
+				$imagen->folder = 'recepcion';
+				$imagen->src = public_path() . '/storage/';
+				$imagen->tabla = $tabla;
+				$imagen->idTabla = $recepcion->id;
+				$imagen->save();
+			}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+		}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+		$arrayRecepcion = $recepcion->all();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+		return view('recepcion.inicio', ['recepcion' => $arrayRecepcion]);
 
+	}
 
-    /*
-    * anular registro recepcion
-    */
-    public function anular($id){
-        $recepcion = Recepcion::find($id);
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id) {
+		//
+	}
 
-        $recepcion->estado = 99;
-        $recepcion->save();
-        return json_decode(true);
-    }
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id) {
+		//
+	}
 
-   
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function pdfview(Request $request)
-    {
-        $items = DB::table('tbrecepcion as re')
-                        ->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
-                        ->join('tbproducto as pr', 'pr.id' ,'=','re.idProducto')
-                        ->select('re.id  as id',
-                            'numeroRecepcion',
-                            'clNombre',
-                            'clRut',
-                            'idProducto',
-                            'fechaRecepcion',
-                            'tipoTrabajo',
-                            'contactoTecnico',
-                            'descripcionVisual',
-                            'pr.prNombre as nombreProducto',
-                            'prBarcode as codEquipo',
-                            'mailContacto')
-                        ->where('re.id',$request->id)
-                        ->where('re.estado',0)
-                        ->get()->first();
-        
-        //$items = DB::table("tbrecepcion")->get();
-                       
-        view()->share('items',$items);
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id) {
+		//
+	}
 
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id) {
+		//
+	}
 
-        if($request->has('download')){
-            $pdf = PDF::loadView('pdfview');
-            $namePdf = 'Recepcion-'.$items->numeroRecepcion.'.pdf';
-            return $pdf->download($namePdf);
-        }
+	/*
+		    * anular registro recepcion
+	*/
+	public function anular($id) {
+		$recepcion = Recepcion::find($id);
 
+		$recepcion->estado = 99;
+		$recepcion->save();
+		return json_decode(true);
+	}
 
-        return view('pdfview');
-    }
-   
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function pdfview(Request $request) {
+		$items = DB::table('tbrecepcion as re')
+			->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+			->join('tbproducto as pr', 'pr.id', '=', 're.idProducto')
+			->select('re.id  as id',
+				'numeroRecepcion',
+				'clNombre',
+				'clRut',
+				'idProducto',
+				'fechaRecepcion',
+				'tipoTrabajo',
+				'contactoTecnico',
+				'descripcionVisual',
+				'pr.prNombre as nombreProducto',
+				'prBarcode as codEquipo',
+				'mailContacto')
+			->where('re.id', $request->id)
+			->where('re.estado', 0)
+			->get()->first();
+
+		//$items = DB::table("tbrecepcion")->get();
+
+		view()->share('items', $items);
+
+		if ($request->has('download')) {
+			$pdf = PDF::loadView('pdfview');
+			$namePdf = 'Recepcion-' . $items->numeroRecepcion . '.pdf';
+			return $pdf->download($namePdf);
+		}
+
+		return view('pdfview');
+	}
+
 }

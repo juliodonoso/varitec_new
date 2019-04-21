@@ -6,13 +6,15 @@
 <script src="{{ URL::asset('js/jquery.Rut.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
+
+
 function _asignar(id){
-  var csrf = $('meta[name="csrf-token"]').attr('content');
-  console.log(csrf)
+ var csrf = $('input[name="_token"]').attr('value');
+console.log(csrf)
   var data={
     csrf
   }
-  
+
    swal({
       title: "Asignar",
       text: "decea enviar a laboratorio?",
@@ -24,7 +26,6 @@ function _asignar(id){
       dangerMode: true,
     }).then(function(isConfirm) {
       if (isConfirm) {
-        console.log('confimacion')
         $.ajax({
             url: "{{asset('Laboratorio/traspaso')}}/"+id,
             type: 'GET',
@@ -41,8 +42,8 @@ function _asignar(id){
             }
         })
 
-      } 
-    })  
+      }
+    })
 }
 
 
@@ -63,7 +64,7 @@ function _asignar(id){
                 <div class="card-content">
                     <div class="col-md-12 ">
                          <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-primary btn-sm"  title="Add">   <i class=" fa fa-sign-in"></i>
-                              Laboratorio 
+                              Laboratorio
                           </a>
                           <a href="{{ asset('/Laboratorio/laboratorioListar/2') }}"  class="btn btn-success btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
                               Terminadas
@@ -93,7 +94,7 @@ function _asignar(id){
                                       <td>{{ $reg->prBarcode }}</td>
                                       <td>{{ $reg->prNombre }}</td>
                                       <td>{{ $reg->tipoTrabajo }}</td>
-                                      <td> 
+                                      <td>
                                         <a href="javascript: _asignar({{ $reg->id }})"  class="btn btn-success btn-xs editereg" title="Traspaso">
                                           <i class="fa fa-check-square-o"></i>
                                        </a>
@@ -106,8 +107,8 @@ function _asignar(id){
                                     @endforeach
                                 </tbody>
                       </table>
-                                            
-                    </div>                    
+
+                    </div>
                 </div>
             </div>
         </div>
