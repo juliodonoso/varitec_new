@@ -289,7 +289,7 @@ class LaboratorioController extends Controller {
 			->get()->first();
 
 		//$items = DB::table("tbrecepcion")->get();
-		dd($items);
+
 		view()->share('items', $items);
 
 		if ($request->has('download')) {

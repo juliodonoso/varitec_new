@@ -17,7 +17,7 @@ console.log(csrf)
 
    swal({
       title: "Asignar",
-      text: "decea enviar a laboratorio?",
+      text: "Desea enviar a laboratorio?",
       icon: "warning",
       buttons: [
         'No',

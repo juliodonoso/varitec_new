@@ -5,7 +5,7 @@
   $( document ).ready(function() {
 
     sessionStorage.clear()
-  $("#agregar").click(function(){ 
+  $("#agregar").click(function(){
 
   let idSuministro =  sessionStorage.getItem("idSuministro");
   let cantidadSuministro =  sessionStorage.getItem("cantidadSuministro");
@@ -21,23 +21,26 @@
       .done(function( msg ) {
         let totalUnidad = msg-cantidadSuministro
         if(totalUnidad < 0){
-          $("#aceptarCotizacion").css('visibility', 'hidden');
-          $("#borrador").css('visibility', 'hidden');
+          $("#aceptarCotizacion").prop("disabled", true);
+          $("#borrador").prop("disabled", true);
           swal('Suminitros insuficientes debe cotizar suministros')
         }else{
           var html = $(".clone").html();
+          $("#aceptarCotizacion").prop("disabled", false);
+          $("#borrador").prop("disabled", false);
           $(".increment").after(html);
         }
       })
     sessionStorage.clear()
   }else{
     swal('Debe ingresar suminitros antes de agregar')
+    $(this).value('')
   }
 
   });
 
 
-  $("body").on("click",".btn-danger",function(){ 
+  $("body").on("click",".btn-danger",function(){
   $(this).parents(".control-group").remove();
     });
 
@@ -56,7 +59,7 @@
 })
 
 
-  $("#borrador").click(function(){ 
+  $("#borrador").click(function(){
     $.ajax({
       method: "GET",
       url: "../<?php echo e($laboratorio[0]->idLab); ?>/edit"
@@ -67,15 +70,46 @@
         }).then(()=>{
           location.href="../laboratorioListar/1";
         });
-        
+
       });
   })
-  
 
   //consultar la cantidad de suministros
 $( document ).on( "change", "input[name*='inputcantidad']", function() {
     sessionStorage.setItem("cantidadSuministro", $(this).val());
-    console.log($(this).val())
+
+  if(sessionStorage.getItem("idSuministro")){
+      console.log(sessionStorage.getItem("idSuministro"))
+      idSuministro=sessionStorage.getItem("idSuministro");
+      cantidadSuministro= $(this).val();
+         $.ajax({
+            method: "GET",
+            url: "../../Suministros/getCantidad/"+idSuministro
+          })
+            .done(function( msg ) {
+              let totalUnidad = msg-cantidadSuministro
+              if(totalUnidad < 0){
+                $("#aceptarCotizacion").prop("disabled", true);
+                $("#borrador").prop("disabled", true);
+                $("#agregar").prop("disabled", true);
+                swal('Suminitros insuficientes')
+              }else{
+                $("#aceptarCotizacion").prop("disabled", false);
+                $("#borrador").prop("disabled", false);
+                 $("#agregar").prop("disabled", false);
+              }
+            })
+    }else{
+      $("#agregar").prop("disabled", true);
+      $("#aceptarCotizacion").prop("disabled", true);
+      $("#borrador").prop("disabled", true);
+       swal('Debe ingresar suminitros antes de agregar')
+       $(this).val('')
+
+      sessionStorage.removeItem("idSuministro")
+    }
+    sessionStorage.removeItem("idSuministro")
+
 });
 
 $( document ).change( "select[name*='inputname']", function() {
@@ -97,69 +131,69 @@ $( document ).change( "select[name*='inputname']", function() {
                     <h4 class="title">Datos Laboratorio</h4>
                     <p class="category"><b>Gestion de laboratorio -- Datos Cliente</b></p>
                 </div>
-                
-                  
+
+
                     <div class="card-body">
-                       <div class="col-md-4"> 
+                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="numeroLaboratorio" >
-                            Número Laboratorio 
+                            Número Laboratorio
                           </label>
-                          <input type="text" class = 'form-control' name="numeroLaboratorio" disabled="disabled" value="<?php echo e($laboratorio[0]->numeroLaboratorio); ?>"> 
+                          <input type="text" class = 'form-control' name="numeroLaboratorio" disabled="disabled" value="<?php echo e($laboratorio[0]->numeroLaboratorio); ?>">
                         </div>
                        </div>
 
-                       <div class="col-md-4"> 
+                       <div class="col-md-4">
                         <div class="form-group">
                           <label  for="contacto" >
                             Número Recepción
                           </label>
-                          <input type="text" class = 'form-control' name="contacto" disabled="disabled" value="<?php echo e($laboratorio[0]->numeroRecepcion); ?>"> 
+                          <input type="text" class = 'form-control' name="contacto" disabled="disabled" value="<?php echo e($laboratorio[0]->numeroRecepcion); ?>">
                         </div>
                        </div>
 
 
-                       <div class="col-md-4"> 
+                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="rut-contacto">
                             Rut
                           </label>
-                          <input type="rut" class = 'form-control' name="rut-contacto" disabled="disabled" value="<?php echo e($laboratorio[0]->clRut); ?>"> 
+                          <input type="rut" class = 'form-control' name="rut-contacto" disabled="disabled" value="<?php echo e($laboratorio[0]->clRut); ?>">
                         </div>
                        </div>
-                    
-                        
-                        <div class="col-md-4"> 
+
+
+                        <div class="col-md-4">
                         <div class="form-group">
                           <label for="nombre" >
                             Nombre Cliente
                           </label>
-                          <input type="text" class = 'form-control' name="nombre" disabled="disabled" value="<?php echo e($laboratorio[0]->clNombre); ?>"> 
+                          <input type="text" class = 'form-control' name="nombre" disabled="disabled" value="<?php echo e($laboratorio[0]->clNombre); ?>">
                         </div>
                        </div>
 
-                       <div class="col-md-4"> 
+                       <div class="col-md-4">
                         <div class="form-group">
                           <label  for="telefono" >
                             Telefono
                           </label>
-                          <input type="text" class = 'form-control' name="telefono" disabled="disabled" value="<?php echo e($laboratorio[0]->clTelefono); ?>"> 
+                          <input type="text" class = 'form-control' name="telefono" disabled="disabled" value="<?php echo e($laboratorio[0]->clTelefono); ?>">
                         </div>
                        </div>
 
 
-                       <div class="col-md-4"> 
+                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="mail-contacto">
                             Mail contacto
                           </label>
-                          <input type="mail" class = 'form-control' name="mail-contacto" disabled="disabled" value="<?php echo e($laboratorio[0]->clEmail); ?>"> 
+                          <input type="mail" class = 'form-control' name="mail-contacto" disabled="disabled" value="<?php echo e($laboratorio[0]->clEmail); ?>">
                         </div>
                        </div>
-                        
+
                         <br>
                         <br>
-                          <div class="col-md-12"> 
+                          <div class="col-md-12">
                                 <?php $__currentLoopData = $imagen; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                   <div class="col-md-3">
                                     <div class="thumbnail">
@@ -180,7 +214,7 @@ $( document ).change( "select[name*='inputname']", function() {
                           </div>
 
                      </div>
-                               
+
             </div>
         </div>
     </div>
@@ -192,7 +226,7 @@ $( document ).change( "select[name*='inputname']", function() {
 
         <?php echo e(Form::hidden('idProducto',null,['id' => 'idProducto'])); ?>
 
-       
+
         <?php echo e(csrf_field()); ?>
 
         <div class="col-md-12">
@@ -201,29 +235,31 @@ $( document ).change( "select[name*='inputname']", function() {
                     <h4 class="title">Cotización de Materiales</h4>
                     <p class="category"><b>Equipo en trabajo</b></p>
                 </div>
-                
-                  
+
+
                     <div class="card-body">
 
-                      
 
-                       <div class="col-md-12"> 
+
+                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="equipo">
                             Descripcion Visual Laboratorio
                           </label>
-                         
-                         <?php echo e(Form::textarea('descripcionVisual', $laboratorio[0]->descripcionVisual , ['class' => 'form-control', 'rows' => 2, 'cols' => 4 , 'disabled'=>'disabled'])); ?> 
+
+                         <?php echo e(Form::textarea('descripcionVisual', $laboratorio[0]->descripcionVisual , ['class' => 'form-control', 'rows' => 2, 'cols' => 4 , 'disabled'=>'disabled'])); ?>
+
                         </div>
                        </div>
-                        
 
-                      <div class="col-md-12"> 
+
+                      <div class="col-md-12">
                         <div class="form-group">
                           <label for="nombre" >
                             <h3>Evaluación del trabajo</h3>
                           </label>
-                          <?php echo e(Form::textarea('descripcion', '', ['class' => 'form-control', 'rows' => 4, 'cols' => 8])); ?> 
+                          <?php echo e(Form::textarea('descripcion', '', ['class' => 'form-control', 'rows' => 4, 'cols' => 8])); ?>
+
                         </div>
                        </div>
 
@@ -231,24 +267,24 @@ $( document ).change( "select[name*='inputname']", function() {
                       <div class="input-group hdtuto control-group lst increment" >
                         <div class="col-md-10">
                           <select name="inputname[]" class="myfrm form-control" >
-                              <option>Seleccione Suministro</option>
+                              <option value="">Seleccione Suministro</option>
                                 <?php $__currentLoopData = $suministros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sum): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($sum->id); ?>"><?php echo e($sum->prNombre); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                          
+
                         </div>
                         <div class="col-md-2"><input type="number" name="inputcantidad[]" class="myfrm form-control" ></div>
-                          <div class="input-group-btn"> 
-                  
-                          <button class="btn btn-success" id="agregar" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Agregar</button>
-                  
+                          <div class="input-group-btn">
+
+                          <button class="btn btn-success" disabled="disabled" id="agregar" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Agregar</button>
+
                           </div>
                         </div>
 
-                        <div class="clone hide">                  
+                        <div class="clone hide">
                         <div class="hdtuto control-group lst input-group" style="margin-top:10px ">
-                  
+
                            <div class="col-md-10">
                             <select  name="inputname[]" class="myfrm form-control" >
                                 <option>Seleccione Suministro</option>
@@ -260,26 +296,26 @@ $( document ).change( "select[name*='inputname']", function() {
                            </div>
                           <div class="col-md-2"><input type="number"  name="inputcantidad[]" class="myfrm form-control"
                             ></div>
-                          <div class="input-group-btn"> 
-                  
+                          <div class="input-group-btn">
+
                             <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remover</button>
-                  
+
                           </div>
-                  
+
                         </div>
-                  
-                      </div> 
+
+                      </div>
                         <div class="col-md-12">
                           <span> <br><br><br><br></span>
                         </div>
-                        
+
                       </div>
-                     </div> 
-                                                                     
+                     </div>
+
             </div>
 
             <div class="row">
-             <div class="col-md-12"> 
+             <div class="col-md-12">
                         <div class="col-md-4">
                           <?php echo e(Form::button('Aceptar',['class' => 'btn btn-success', 'id' => 'aceptarCotizacion' ])); ?>
 
@@ -293,8 +329,8 @@ $( document ).change( "select[name*='inputname']", function() {
 
                         </div>
                       </div>
-                      </div> 
-                     
+                      </div>
+
         </div>
       <?php echo e(Form::close()); ?>
 
@@ -303,8 +339,8 @@ $( document ).change( "select[name*='inputname']", function() {
 
   </div>
    <br>
-                    
-                      
+
+
 </div>
 
 
