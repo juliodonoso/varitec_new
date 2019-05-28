@@ -23,7 +23,7 @@ class RecepcionController extends Controller {
 		$recepcion = DB::table('tbrecepcion as re')
 			->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
 			->select('re.id  as id', 'numeroRecepcion', 'clNombre', 'clRut', 'idProducto', 'fechaRecepcion')
-			->where('re.estado', 0)
+			->where('re.estado', '=', 0)
 			->get();
 
 		return view('recepcion.inicio', ['recepcion' => $recepcion]);
@@ -57,8 +57,7 @@ class RecepcionController extends Controller {
 		$producto = new productos();
 		$imagen = new Image();
 		$folio = Folios::find(1);
-
-		if ($request->clienteNuevo == "false") {
+		if ($request->clienteNuevo == "true") {
 			$cliente->clRut = $request->rutCliente;
 			$cliente->clNombre = $request->cliente;
 			$cliente->clTelefono = $request->telefono;
@@ -86,8 +85,7 @@ class RecepcionController extends Controller {
 			$folio->folioRecepcion = $request->numeroRecepcion + 1;
 			$folio->save();
 		} else {
-			dd($request->idProducto);
-			$idCliente = $cliente->where('clRut', str_replace('.', '', $request->rutCliente))->get();
+			$idCliente = $cliente->where('clRut', $request->rutCliente)->get();
 			$recepcion->idCliente = $idCliente[0]->id;
 			$recepcion->idProducto = $request->idProducto;
 			$recepcion->numeroRecepcion = $request->numeroRecepcion;
@@ -200,7 +198,6 @@ class RecepcionController extends Controller {
 				'prBarcode as codEquipo',
 				'mailContacto')
 			->where('re.id', $request->id)
-			->where('re.estado', 0)
 			->get()->first();
 
 		//$items = DB::table("tbrecepcion")->get();

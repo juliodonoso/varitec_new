@@ -34,8 +34,8 @@ function _anular(id){
             }
         })
 
-      } 
-    })  
+      }
+    })
 }
 
 
@@ -77,9 +77,9 @@ function _anular(id){
                                       <td><?php echo e($reg->clRut); ?></td>
                                       <td><?php echo e($reg->idProducto); ?></td>
                                       <td><?php echo e($reg->fechaRecepcion); ?></td>
-                                      <td> 
+                                      <td>
                                         <a href="<?php echo e(route('pdfview',['download'=>'pdf','id'=> $reg->id])); ?>"  class="btn btn-success btn-xs editereg" title="Ver">
-                                          <i class="fa fa-eye"></i>
+                                          <i class="fa fa-check"></i>
                                        </a>
 
                                         <a href="javascript:_anular(<?php echo e($reg->id); ?>)"  class="btn btn-error btn-xs editereg" title="Anular">
@@ -90,8 +90,8 @@ function _anular(id){
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                       </table>
-                                            
-                    </div>                    
+
+                    </div>
                 </div>
             </div>
         </div>

@@ -39,12 +39,21 @@
                                       <td>{{ $lab->tipoTrabajo }}</td>
                                       <td>
 
-                                       @if($lab->estadoLab != 2)
-                                        <a href="{{ route('Laboratorio.gestion',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Gestion">
+                                       @if($lab->estadoLab == 0)
+                                        <a href="{{ route('Laboratorio.gestion',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Gestionar">
                                           <i class="fa fa-share-square-o"></i>
                                        </a>
+                                       @elseif($lab->estadoLab == 1)
+                                        <a href="{{ route('Laboratorio.borrador',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Trabajar">
+                                          <i class="fa fa-briefcase"></i>
+                                       </a>
+                                       @elseif($lab->estadoLab == 2)
+                                        <a href="{{ route('Laboratorio.work',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Retomar">
+                                          <i class="fa fa-pencil-square"></i>
+                                       </a>
+
                                        @endif
-                                        <a href="{{ route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->idRes]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="Anular">
+                                        <a href="{{ route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->idRes]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
                                           <i class="fa fa-file-pdf-o"></i>
                                        </a>
                                         </td>

@@ -10,56 +10,113 @@
   let idSuministro =  sessionStorage.getItem("idSuministro");
   let cantidadSuministro =  sessionStorage.getItem("cantidadSuministro");
 
-
-
   if(idSuministro && cantidadSuministro){
+    var html = `<div class="input-group hdtuto control-group lst increment" >
 
-    $.ajax({
-      method: "GET",
-      url: "../../Suministros/getCantidad/"+idSuministro
-    })
+                           <div class="col-md-10">
+                            <select  name="inputname[]" class="myfrm form-control" >
+                                <option  selected="true" disabled="disabled">Seleccione Suministro</option>
+                                <?php $__currentLoopData = $suministros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sum): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($sum->id); ?>"><?php echo e($sum->prNombre); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                           </div>
+                          <div class="col-md-2"><input type="number" value="0" name="inputcantidad[]" class="myfrm form-control">
+                          </div>
+                          <div class="input-group-btn">
+                            <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remover</button>
+                          </div>
+                  </div>`;
+      $.ajax({
+        method: "GET",
+        url: "../../Suministros/getCantidad/"+idSuministro
+      })
       .done(function( msg ) {
         let totalUnidad = msg-cantidadSuministro
         if(totalUnidad < 0){
-          $("#aceptarCotizacion").prop("disabled", true);
-          $("#borrador").prop("disabled", true);
-          swal('Suminitros insuficientes debe cotizar suministros')
+          $("#aceptarCotizacion").hide();
+          $("#borrador").show();
+          $("#agregar").removeProp("disabled");
+          $(".increment").last().after(html)
+          //swal('Suminitros insuficientes debe cotizar suministros');
         }else{
-          var html = $(".clone").html();
-          $("#aceptarCotizacion").prop("disabled", false);
-          $("#borrador").prop("disabled", false);
-          $(".increment").after(html);
+          //$("#aceptarCotizacion").show();
+          //$("#borrador").hide();
+          $(".increment").last().after(html);
         }
       })
-    sessionStorage.clear()
+      sessionStorage.clear()
   }else{
     swal('Debe ingresar suminitros antes de agregar')
     $(this).value('')
   }
-
   });
 
 
   $("body").on("click",".btn-danger",function(){
-  $(this).parents(".control-group").remove();
-    });
+    $(this).parents(".control-group").remove();
+    $("#aceptarCotizacion").prop("disabled", false);
+    $("#borrador").prop("disabled", false);
+    $("#agregar").prop("disabled", false);
+  });
 
   $('#aceptarCotizacion').click(function(){
-    $.ajax({
-      method: "GET",
-      url: "../<?php echo e($laboratorio[0]->idLab); ?>/aceptar"
-    })
-      .done(function( msg ) {
     swal({
-      text: "Orden de Laboratorio a quedado Aceptada, se enviara correo electronico"
-    }).then(()=>{
-      location.href="../laboratorioListar/2";
-    });
-  })
-})
+      title: "Esta seguro de aceptar gestion?",
+      text: "de aceptar esta quedara cerrada!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+          $('#formAceptar').submit();
+        } else {
+          return false;
+        }
+      });
+    })
 
 
   $("#borrador").click(function(){
+    let token = $('input[name="_token"]').attr('value');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+        }
+    });
+
+    let inputcantidad = [];
+    let inputname = [];
+
+    $('input[name="inputcantidad[]"]').each(function() {
+        let aux = $(this).val().replace(/^0+/, '');
+        if(aux != ""){
+          inputcantidad.push(aux);
+        }
+    });
+
+    $('select[name="inputname[]"]').each(function() {
+        let aux = $(this).val();
+        if(aux){
+          inputname.push(aux);
+        }
+    });
+
+
+   $.ajax({
+              url: '<?php echo e(asset('Rebaja/create')); ?>',
+              method: 'POST',
+              data: {'idLab':<?php echo e($laboratorio[0]->idLab); ?>,inputname,inputcantidad },
+              success: function( data ){
+                  //$('#response pre').html( data );
+                  alert('paso');
+              },
+              error: function( jqXhr, textStatus, erSrorThrown ){
+                  //console.log( errorThrown );
+              }
+      })
+    return false;
     $.ajax({
       method: "GET",
       url: "../<?php echo e($laboratorio[0]->idLab); ?>/edit"
@@ -70,16 +127,20 @@
         }).then(()=>{
           location.href="../laboratorioListar/1";
         });
-
       });
   })
 
   //consultar la cantidad de suministros
 $( document ).on( "change", "input[name*='inputcantidad']", function() {
-    sessionStorage.setItem("cantidadSuministro", $(this).val());
+   let token = $('input[name="_token"]').attr('value');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+        }
 
+    });
+    sessionStorage.setItem("cantidadSuministro", $(this).val());
   if(sessionStorage.getItem("idSuministro")){
-      console.log(sessionStorage.getItem("idSuministro"))
       idSuministro=sessionStorage.getItem("idSuministro");
       cantidadSuministro= $(this).val();
          $.ajax({
@@ -89,24 +150,27 @@ $( document ).on( "change", "input[name*='inputcantidad']", function() {
             .done(function( msg ) {
               let totalUnidad = msg-cantidadSuministro
               if(totalUnidad < 0){
-                $("#aceptarCotizacion").prop("disabled", true);
-                $("#borrador").prop("disabled", true);
-                $("#agregar").prop("disabled", true);
-                swal('Suminitros insuficientes')
+                $("#aceptarCotizacion").hide();
+                $("#borrador").show();
+                $("#agregar").prop("disabled", false);
+                $("input[name*='inputcantidad']").last().addClass('text-danger');
+                var largoinput=$("input[name*='inputcantidad']").length;
+
+                //$("#agregar").prop("disabled", true);
+                swal('Suminitros insuficientes, debe solicitar compra');
               }else{
-                $("#aceptarCotizacion").prop("disabled", false);
-                $("#borrador").prop("disabled", false);
-                 $("#agregar").prop("disabled", false);
+                $("#aceptarCotizacion").show();
+                $("#borrador").hide();
+                //$("#agregar").prop("disabled", false);
               }
             })
     }else{
-      $("#agregar").prop("disabled", true);
-      $("#aceptarCotizacion").prop("disabled", true);
-      $("#borrador").prop("disabled", true);
+      //$("#agregar").prop("disabled", true);
+      //$("#aceptarCotizacion").prop("disabled", true);
+      //$("#borrador").prop("disabled", true);
        swal('Debe ingresar suminitros antes de agregar')
        $(this).val('')
-
-      sessionStorage.removeItem("idSuministro")
+       sessionStorage.removeItem("idSuministro")
     }
     sessionStorage.removeItem("idSuministro")
 
@@ -220,12 +284,9 @@ $( document ).change( "select[name*='inputname']", function() {
     </div>
 
     <div class="row">
-        <?php echo e(Form::open(array('action' => 'RecepcionController@store','enctype'=>"multipart/form-data"))); ?>
-
-        <?php echo e(Form::hidden('clienteNuevo',null,['id' => 'clienteNuevo'])); ?>
+        <?php echo e(Form::open(array('route' => array('Laboratorio.aceptar',$laboratorio[0]->idLab),'enctype'=>"multipart/form-data",'id'=>'formAceptar'))); ?>
 
         <?php echo e(Form::hidden('idProducto',null,['id' => 'idProducto'])); ?>
-
 
         <?php echo e(csrf_field()); ?>
 
@@ -267,14 +328,14 @@ $( document ).change( "select[name*='inputname']", function() {
                       <div class="input-group hdtuto control-group lst increment" >
                         <div class="col-md-10">
                           <select name="inputname[]" class="myfrm form-control" >
-                              <option value="">Seleccione Suministro</option>
+                              <option  selected="true" disabled="disabled">Seleccione Suministro</option>
                                 <?php $__currentLoopData = $suministros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sum): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($sum->id); ?>"><?php echo e($sum->prNombre); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
 
                         </div>
-                        <div class="col-md-2"><input type="number" name="inputcantidad[]" class="myfrm form-control" ></div>
+                        <div class="col-md-2"><input type="number" name="inputcantidad[]" class="myfrm form-control" value="0" ></div>
                           <div class="input-group-btn">
 
                           <button class="btn btn-success" disabled="disabled" id="agregar" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Agregar</button>
@@ -283,34 +344,8 @@ $( document ).change( "select[name*='inputname']", function() {
                         </div>
 
                         <div class="clone hide">
-                        <div class="hdtuto control-group lst input-group" style="margin-top:10px ">
-
-                           <div class="col-md-10">
-                            <select  name="inputname[]" class="myfrm form-control" >
-                                <option>Seleccione Suministro</option>
-                                <?php $__currentLoopData = $suministros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sum): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($sum->id); ?>"><?php echo e($sum->prNombre); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
-
-                           </div>
-                          <div class="col-md-2"><input type="number"  name="inputcantidad[]" class="myfrm form-control"
-                            ></div>
-                          <div class="input-group-btn">
-
-                            <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remover</button>
-
-                          </div>
 
                         </div>
-
-                      </div>
-                        <div class="col-md-12">
-                          <span> <br><br><br><br></span>
-                        </div>
-
-                      </div>
-                     </div>
 
             </div>
 
@@ -319,13 +354,11 @@ $( document ).change( "select[name*='inputname']", function() {
                         <div class="col-md-4">
                           <?php echo e(Form::button('Aceptar',['class' => 'btn btn-success', 'id' => 'aceptarCotizacion' ])); ?>
 
-                        </div>
-                        <div class="col-md-4">
-                          <?php echo e(Form::button('Borrador',['class' => 'btn btn-info','id'=>'borrador'])); ?>
+                          <?php echo e(Form::button('Borrador',['class' => 'btn btn-info','id'=>'borrador','style'=>'display:none'])); ?>
 
                         </div>
                         <div class="col-md-4">
-                          <?php echo e(link_to_route('suministros.create', 'Cotizar Suministro', null, array('class' => 'btn btn-warning'))); ?>
+                          <?php echo e(link_to_route('suministros.create', 'Solicitud Suministro', null, array('class' => 'btn btn-warning'))); ?>
 
                         </div>
                       </div>

@@ -44,7 +44,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/Laboratorio/laboratorioListar/{id}', 'LaboratorioController@listarLaboratorio')->name('Laboratorio.estados');
 	Route::get('/Laboratorio/traspaso/{id}', 'LaboratorioController@traspasoLaboratorio')->name('Laboratorio.traspaso');
 	Route::get('/Laboratorio/gestion/{id}', 'LaboratorioController@gestion')->name('Laboratorio.gestion');
-	Route::get('/Laboratorio/{id}/aceptar', 'LaboratorioController@aceptadas')->name('Laboratorio.aceptar');
+	Route::get('/Laboratorio/borrador/{id}', 'LaboratorioController@borrador')->name('Laboratorio.borrador');
+	Route::get('/Laboratorio/trabajo/{id}', 'LaboratorioController@trabajo')->name('Laboratorio.work');
+	Route::post('/Laboratorio/{id}/aceptar', 'LaboratorioController@aceptadas')->name('Laboratorio.aceptar');
 	Route::get('/Laboratorio/mail', 'LaboratorioController@enviarMail')->name('Laboratorio.mail');
 	Route::resource('Laboratorio', 'LaboratorioController');
 	//Route::get('/bodega/agregar','BodegasController@add')->name('bodega.add');
@@ -64,8 +66,10 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/Suministros/rebaja/', 'SuministrosController@rebajaProducto')->name('suministros.rebaja');
 	//consultarCantidad
 	Route::resource('suministros', 'SuministrosController');
-	/* cotizaciones  */
 
+	Route::post('/Rebaja/create', 'RebajaController@rebajar')->name('rebaja.crear');
+
+	/* cotizaciones  */
 	Route::get('/cotizaciones/mostrar/', 'CotizacionesController@mostrar')->name('cotizaciones.mostrar');
 	Route::get('/cotizaciones/teminadas', 'CotizacionesController@cotizacionesTerminadas')->name('cotizaciones.terminadas');
 	Route::get('cotizaciones/pendientes', 'CotizacionesController@cotizacionesPendientes')->name('cotizaciones.pendientes');

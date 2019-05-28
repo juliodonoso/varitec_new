@@ -2,10 +2,10 @@
 
             <div class="logo">
                 <a href="#" class="simple-text logo-mini">
-                    
+
                 </a>
                 <a href="#" class="simple-text logo-normal">
-                   Panel Varitec 
+                   Panel Varitec
                 </a>
             </div>
             <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y">
@@ -20,9 +20,9 @@
                                 <b class="caret"></b>
                             </span>
                         </a>
-                       
+
                         <div class="clearfix"></div>
-@if (1 == 1 )                            
+@if (1 == 1 )
                         <div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                {{-- <li>
@@ -46,22 +46,22 @@
                                 </li>
                             </ul>
                         </div>
-@endif                       
+@endif
                     </div>
                 </div>
 
                 <ul class="nav">
-@if (1 == 2 )                        
+@if (1 == 2 )
                     <li class="{{ ( $menu == "m_dashboard" )? "active" : "" }}">
                         <a href="{{ route('home') }}">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
                         </a>
-                    </li>                   
-@endif                    
-@if ( Auth::user()->rol_id == 1 )  
-                        <li class="{{-- ( $menu == "m_Iven") ? "active" : "" --}}">
-                        
+                    </li>
+@endif
+@if ( Auth::user()->rol_id == 1 )
+                    <li class="{{-- ( $menu == "m_Iven") ? "active" : "" --}}">
+
                         <a data-toggle="collapse" aria-expanded="{{-- ( $menu == "m_Iven") ? "true" : "false" --}}" href="#menuInformes">
                             <i class="material-icons">content_paste</i>
                             <p> Tablas
@@ -86,7 +86,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            
+
 
                             <ul class="nav">
                                 <li class="{{-- ( $menu == "m_Iven")? "active" : "" --}}">
@@ -95,8 +95,8 @@
                                         <span class="sidebar-normal">Clientes</span>
                                     </a>
                                 </li>
-                            </ul>      
-                            
+                            </ul>
+
                             <ul class="nav">
                                 <li class="{{-- ( $menu == "m_Iven")? "active" : "" --}}">
                                     <a href="{{route('Productos.index')}}">
@@ -104,7 +104,7 @@
                                         <span class="sidebar-normal">Productos</span>
                                     </a>
                                 </li>
-                            </ul>                              
+                            </ul>
 
                             <ul class="nav">
                                 <li class="{{-- ( $menu == "m_Iven")? "active" : "" --}}">
@@ -133,31 +133,31 @@
                                 </li>
                             </ul>
 
-                        </div>    
+                        </div>
                     </li>
-                       <li>
+                    <li>
                         <a href="{{route('Recepcion.index')}}">
                             <i class="material-icons">input</i>
                             <p> Recepcion </p>
                         </a>
-                        </li>  
-                    
+                    </li>
+
                      <li>
                         <a href="{{route('Laboratorio.index')}}">
                             <i class="material-icons"  >group_work</i>
                             <p> Laboratorio </p>
                         </a>
-                    </li> 
+                    </li>
 
                      <li>
                         <a  href="{{route('cotizaciones.index')}}">
                             <i class="material-icons">import_contacts</i>
                             <p> Cotizaciòn</p>
                         </a>
-                    </li>  
+                    </li>
 
-                    
-                                    
+
+
 
                     <li {{--class="{{ ( $menu == "m_uadm" || $menu == "m_user") ? "active" : "" }} --}} >
                         <a data-toggle="collapse" aria-expanded="{{-- ( $menu == "m_uadm" || $menu == "m_user") ? "true" : "false" --}}  " href="#menuTablas">
@@ -185,8 +185,30 @@
                     </li>
 
 
+@else
 
-@endif                         
+<li>
+                        <a href="{{route('Recepcion.index')}}">
+                            <i class="material-icons">input</i>
+                            <p> Recepcion </p>
+                        </a>
+                    </li>
+
+                     <li>
+                        <a href="{{route('Laboratorio.index')}}">
+                            <i class="material-icons"  >group_work</i>
+                            <p> Laboratorio </p>
+                        </a>
+                    </li>
+
+                     <li>
+                        <a  href="{{route('cotizaciones.index')}}">
+                            <i class="material-icons">import_contacts</i>
+                            <p> Cotizaciòn</p>
+                        </a>
+                    </li>
+
+@endif
 
 
 

@@ -37,12 +37,21 @@
                                       <td><?php echo e($lab->tipoTrabajo); ?></td>
                                       <td>
 
-                                       <?php if($lab->estadoLab != 2): ?>
-                                        <a href="<?php echo e(route('Laboratorio.gestion',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Gestion">
+                                       <?php if($lab->estadoLab == 0): ?>
+                                        <a href="<?php echo e(route('Laboratorio.gestion',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Gestionar">
                                           <i class="fa fa-share-square-o"></i>
                                        </a>
+                                       <?php elseif($lab->estadoLab == 1): ?>
+                                        <a href="<?php echo e(route('Laboratorio.borrador',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Trabajar">
+                                          <i class="fa fa-briefcase"></i>
+                                       </a>
+                                       <?php elseif($lab->estadoLab == 2): ?>
+                                        <a href="<?php echo e(route('Laboratorio.work',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Retomar">
+                                          <i class="fa fa-pencil-square"></i>
+                                       </a>
+
                                        <?php endif; ?>
-                                        <a href="<?php echo e(route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->idRes])); ?>" style="background-color:red"  class="btn btn-error btn-xs editereg" title="Anular">
+                                        <a href="<?php echo e(route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->idRes])); ?>" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
                                           <i class="fa fa-file-pdf-o"></i>
                                        </a>
                                         </td>

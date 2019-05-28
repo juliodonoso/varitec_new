@@ -2,10 +2,10 @@
 
             <div class="logo">
                 <a href="#" class="simple-text logo-mini">
-                    
+
                 </a>
                 <a href="#" class="simple-text logo-normal">
-                   Panel Varitec 
+                   Panel Varitec
                 </a>
             </div>
             <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y">
@@ -21,9 +21,9 @@
                                 <b class="caret"></b>
                             </span>
                         </a>
-                       
+
                         <div class="clearfix"></div>
-<?php if(1 == 1 ): ?>                            
+<?php if(1 == 1 ): ?>
                         <div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                
@@ -35,22 +35,22 @@
                                 </li>
                             </ul>
                         </div>
-<?php endif; ?>                       
+<?php endif; ?>
                     </div>
                 </div>
 
                 <ul class="nav">
-<?php if(1 == 2 ): ?>                        
+<?php if(1 == 2 ): ?>
                     <li class="<?php echo e(( $menu == "m_dashboard" )? "active" : ""); ?>">
                         <a href="<?php echo e(route('home')); ?>">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
                         </a>
-                    </li>                   
-<?php endif; ?>                    
-<?php if( Auth::user()->rol_id == 1 ): ?>  
-                        <li class="">
-                        
+                    </li>
+<?php endif; ?>
+<?php if( Auth::user()->rol_id == 1 ): ?>
+                    <li class="">
+
                         <a data-toggle="collapse" aria-expanded="" href="#menuInformes">
                             <i class="material-icons">content_paste</i>
                             <p> Tablas
@@ -75,7 +75,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            
+
 
                             <ul class="nav">
                                 <li class="">
@@ -84,8 +84,8 @@
                                         <span class="sidebar-normal">Clientes</span>
                                     </a>
                                 </li>
-                            </ul>      
-                            
+                            </ul>
+
                             <ul class="nav">
                                 <li class="">
                                     <a href="<?php echo e(route('Productos.index')); ?>">
@@ -93,7 +93,7 @@
                                         <span class="sidebar-normal">Productos</span>
                                     </a>
                                 </li>
-                            </ul>                              
+                            </ul>
 
                             <ul class="nav">
                                 <li class="">
@@ -122,31 +122,31 @@
                                 </li>
                             </ul>
 
-                        </div>    
+                        </div>
                     </li>
-                       <li>
+                    <li>
                         <a href="<?php echo e(route('Recepcion.index')); ?>">
                             <i class="material-icons">input</i>
                             <p> Recepcion </p>
                         </a>
-                        </li>  
-                    
+                    </li>
+
                      <li>
                         <a href="<?php echo e(route('Laboratorio.index')); ?>">
                             <i class="material-icons"  >group_work</i>
                             <p> Laboratorio </p>
                         </a>
-                    </li> 
+                    </li>
 
                      <li>
                         <a  href="<?php echo e(route('cotizaciones.index')); ?>">
                             <i class="material-icons">import_contacts</i>
                             <p> Cotizaciòn</p>
                         </a>
-                    </li>  
+                    </li>
 
-                    
-                                    
+
+
 
                     <li  >
                         <a data-toggle="collapse" aria-expanded="  " href="#menuTablas">
@@ -174,8 +174,30 @@
                     </li>
 
 
+<?php else: ?>
 
-<?php endif; ?>                         
+<li>
+                        <a href="<?php echo e(route('Recepcion.index')); ?>">
+                            <i class="material-icons">input</i>
+                            <p> Recepcion </p>
+                        </a>
+                    </li>
+
+                     <li>
+                        <a href="<?php echo e(route('Laboratorio.index')); ?>">
+                            <i class="material-icons"  >group_work</i>
+                            <p> Laboratorio </p>
+                        </a>
+                    </li>
+
+                     <li>
+                        <a  href="<?php echo e(route('cotizaciones.index')); ?>">
+                            <i class="material-icons">import_contacts</i>
+                            <p> Cotizaciòn</p>
+                        </a>
+                    </li>
+
+<?php endif; ?>
 
 
 

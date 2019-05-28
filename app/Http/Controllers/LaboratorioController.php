@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Folios;
+use App\Http\Controllers\Controller;
 use App\Image;
 use App\Laboratorio;
 use App\Recepcion;
@@ -13,14 +14,17 @@ use Illuminate\Support\Facades\Mail;
 use PDF;
 
 class LaboratorioController extends Controller {
+
+	public function __construct() {
+		$this->middleware('auth');
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		//
-
 		$recepcion = DB::table('tbrecepcion as re')
 			->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
 			->join('tbproducto as p', 'p.id', '=', 're.idProducto')
@@ -77,11 +81,24 @@ class LaboratorioController extends Controller {
 
 	}
 
-	public function aceptadas($id) {
-		//enviar mail con confirmación
+	public function aceptadas(Request $request, $id) {
 		$lab = Laboratorio::find($id);
+		if (isset($request->inputname)) {
+			//rebaja suministros
+			$rebaja = new RebajaController();
+			$suministros = new SuministrosController();
+			foreach ($request->inputname as $clave => $input) {
+				// Code Here
+				$rebaja->rebajar($id, $input, $request->inputcantidad[$clave]);
+				$suministros->descuento($input, $request->inputcantidad[$clave]);
+
+			}
+		}
+
+		//enviar mail con confirmación
+
 		$lab->estado = 2;
-		//dd($lab->idRecepcion);
+		$lab->descripcionVisual = $request->descripcion ? $request->descripcion : '';
 		$res = Recepcion::find($lab->idRecepcion);
 
 		Mail::send('mailVaritec', array(
@@ -100,8 +117,15 @@ class LaboratorioController extends Controller {
 			});
 		$lab->save();
 		//envio correo
-		//return view('laboratorio.laboratorio',['laboratorio'=> $lab,'titulo'=>$titulo]);
+		$laboratorio = DB::table('tbllaboratorio as lab')
+			->leftJoin('tbrecepcion as re', 're.id', '=', 'lab.idRecepcion')
+			->leftJoin('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+			->leftJoin('tbproducto as p', 'p.id', '=', 're.idProducto')
+			->where('lab.estado', 0)
+			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
+			->get();
 
+		return view('laboratorio.laboratorio', ['laboratorio' => $laboratorio, 'titulo' => 'Activas']);
 	}
 
 	/**
@@ -137,7 +161,7 @@ class LaboratorioController extends Controller {
 			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
 			->get();
 
-		return view('laboratorio.laboratorio', ['laboratorio' => $laboratorio, 'titulo' => 'Activas']);
+		return view('laboratorio.laboratorio', ['laboratorio' => $laboratorio, 'titulo' => 'Cotización laboratorio']);
 	}
 
 	public function listarLaboratorio($id) {
@@ -150,9 +174,11 @@ class LaboratorioController extends Controller {
 			->get();
 		$titulo = "Activas";
 		if ($id == 1) {
-			$titulo = "Borrador";
+			$titulo = "Trabajo Laboratorio";
 		} elseif ($id == 2) {
-			$titulo = "Terminadas";
+			$titulo = "Pendientes (Borrador)";
+		} elseif ($id == 3) {
+			$titulo = "Cerradas (Finalizadas)";
 		}
 
 		return view('laboratorio.laboratorio', ['laboratorio' => $laboratorio, 'titulo' => $titulo]);
@@ -251,7 +277,7 @@ class LaboratorioController extends Controller {
 				'prBarcode as codEquipo',
 				'mailContacto')
 			->where('re.id', $request->id)
-			->where('re.estado', 2)
+			->where('re.estado', 3)
 			->get()->first();
 		//$items = DB::table("tbrecepcion")->get();
 
@@ -302,6 +328,58 @@ class LaboratorioController extends Controller {
 	}
 
 	public function gestion($id) {
+
+		$laboratorio = DB::table('tbllaboratorio as lab')
+			->join('tbrecepcion as res', 'lab.idRecepcion', '=', 'res.id')
+			->join('tbcliente as cl', 'cl.id', '=', 'res.idCliente')
+			->where('lab.id', $id)
+			->select('lab.id as idLab', 'lab.*', 'res.*', 'cl.*')
+			->get();
+
+		$imagen = new Image();
+
+		$imagenes = $imagen->where('idTabla', $laboratorio[0]->idRecepcion)
+			->where('tabla', 'tbrecepcion')
+			->select('name', 'src', 'folder')
+			->get();
+
+		$suministros = new Suministros();
+		//dd( $suministros->all());
+		return view('laboratorio.gestion', [
+			'laboratorio' => $laboratorio,
+			'imagen' => $imagenes,
+			'suministros' => $suministros->all(),
+		]);
+
+	}
+
+	public function borrador($id) {
+
+		$laboratorio = DB::table('tbllaboratorio as lab')
+			->join('tbrecepcion as res', 'lab.idRecepcion', '=', 'res.id')
+			->join('tbcliente as cl', 'cl.id', '=', 'res.idCliente')
+			->where('lab.id', $id)
+			->select('lab.id as idLab', 'lab.*', 'res.*', 'cl.*')
+			->get();
+
+		$imagen = new Image();
+
+		$imagenes = $imagen->where('idTabla', $laboratorio[0]->idRecepcion)
+			->where('tabla', 'tbrecepcion')
+			->select('name', 'src', 'folder')
+			->get();
+
+		$suministros = new Suministros();
+		//dd( $suministros->all());
+		return view('laboratorio.borrador', [
+			'laboratorio' => $laboratorio,
+			'imagen' => $imagenes,
+			'suministros' => $suministros->all(),
+		]);
+
+	}
+
+	public function trabajo($id) {
 
 		$laboratorio = DB::table('tbllaboratorio as lab')
 			->join('tbrecepcion as res', 'lab.idRecepcion', '=', 'res.id')

@@ -10,7 +10,6 @@
 
 function _asignar(id){
  var csrf = $('input[name="_token"]').attr('value');
-console.log(csrf)
   var data={
     csrf
   }
@@ -63,15 +62,18 @@ console.log(csrf)
                 </div>
                 <div class="card-content">
                     <div class="col-md-12 ">
-                         <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-primary btn-sm"  title="Add">   <i class=" fa fa-sign-in"></i>
+                         <a href="{{ asset('/Laboratorio/listarLaboratorio') }}"  class="btn btn-primary btn-sm"  title="Laboratorio">   <i class=" fa fa-sign-in"></i>
                               Laboratorio
                           </a>
-                          <a href="{{ asset('/Laboratorio/laboratorioListar/2') }}"  class="btn btn-success btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
-                              Terminadas
+                          <a href="{{ asset('/Laboratorio/laboratorioListar/1') }}"  class="btn btn-info btn-sm"  title="Gestion">   <i class="fa fa-briefcase"></i>
+                              Aceptadas
                           </a>
 
-                          <a href="{{ asset('/Laboratorio/laboratorioListar/1') }}"  class="btn btn-secondary btn-sm"  title="Add">   <i class="fa fa-plus-square"></i>
-                              Borrador
+                          <a href="{{ asset('/Laboratorio/laboratorioListar/2') }}"  class="btn btn-secondary btn-sm"  title="Pendientes">   <i class="fa fa-pencil-square"></i>
+                              Pendientes
+                          </a>
+                           <a href="{{ asset('/Laboratorio/laboratorioListar/3') }}"  class="btn btn-success btn-sm"  title="Cerradas">   <i class="fa fa-list-alt"></i>
+                              Cerradas
                           </a>
 
                     </div>
@@ -82,8 +84,8 @@ console.log(csrf)
                                     <th>Cliente</th>
                                     <th>Codigo</th>
                                     <th>Equipo</th>
-                                    <th>tipo de trabajo</th>
-                                    <th>Traspaso Laboratorio</th>
+                                    <th>Tipo de trabajo</th>
+                                    <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,10 +98,10 @@ console.log(csrf)
                                       <td>{{ $reg->tipoTrabajo }}</td>
                                       <td>
                                         <a href="javascript: _asignar({{ $reg->id }})"  class="btn btn-success btn-xs editereg" title="Traspaso">
-                                          <i class="fa fa-check-square-o"></i>
+                                          <i class="fa fa-exchange"></i>
                                        </a>
 
-                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $reg->id]) }}"  class="btn btn-error btn-xs editereg" title="Ver">
+                                        <a href="{{ route('pdfview',['download'=>'pdf','id'=> $reg->id]) }}"  class="btn btn-xs editereg btn-info" title="Ver">
                                           <i class="fa fa-eye"></i>
                                        </a>
                                         </td>

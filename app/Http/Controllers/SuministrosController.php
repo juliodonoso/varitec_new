@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Folios;
+use App\Http\Controllers\Controller;
 use App\Suministros;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SuministrosController extends Controller {
+
+	public function __construct() {
+		$this->middleware('auth');
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
+
 	public function index() {
 		//
 		$suminitros = Suministros::paginate(15);
@@ -129,6 +136,29 @@ class SuministrosController extends Controller {
 			echo $suministros->prUnidad;
 		} catch (Exception $e) {
 			echo $e;
+		}
+
+	}
+
+	public function descuento($id, $cantidad) {
+		$suministros = Suministros::find($id);
+		$suministros->prUnidad = $cantidad - $suministros->prUnidad;
+		if ($suministros->save()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public function descuentoMass($id, $cantidad) {
+
+		$suministros = Suministros::find($id);
+		$suministros->prUnidad = $cantidad - $suministros->prUnidad;
+		if ($suministros->save()) {
+			return true;
+		} else {
+			return false;
 		}
 
 	}
