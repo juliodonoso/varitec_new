@@ -154,9 +154,10 @@ class SuministrosController extends Controller {
 	public function descuentoMass($id, $cantidad) {
 
 		$suministros = Suministros::find($id);
-		$suministros->prUnidad = $cantidad - $suministros->prUnidad;
+		$diferencia = $cantidad - $suministros->prUnidad;
+		$suministros->prUnidad = $diferencia;
 		if ($suministros->save()) {
-			return true;
+			return $diferencia;
 		} else {
 			return false;
 		}

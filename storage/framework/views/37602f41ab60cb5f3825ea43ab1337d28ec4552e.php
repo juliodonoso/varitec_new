@@ -42,11 +42,11 @@
                                           <i class="fa fa-share-square-o"></i>
                                        </a>
                                        <?php elseif($lab->estadoLab == 1): ?>
-                                        <a href="<?php echo e(route('Laboratorio.borrador',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Trabajar">
+                                        <a href="<?php echo e(route('Laboratorio.work',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Trabajar">
                                           <i class="fa fa-briefcase"></i>
                                        </a>
                                        <?php elseif($lab->estadoLab == 2): ?>
-                                        <a href="<?php echo e(route('Laboratorio.work',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Retomar">
+                                        <a href="<?php echo e(route('Laboratorio.borrador',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Retomar">
                                           <i class="fa fa-pencil-square"></i>
                                        </a>
 

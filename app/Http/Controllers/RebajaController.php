@@ -25,15 +25,16 @@ class RebajaController extends Controller {
 		$rebaja = new Rebaja();
 		$suministros = new SuministrosController();
 		foreach ($request->inputname as $k => $valor) {
+			$diferencia = $suministros->descuentoMass($valor, $request->inputcantidad[$k]);
 			$array = array('idUser' => Auth::user()->id,
-				'idSuministro' => $request->idLab,
-				'idLaboratorio' => $request->inputcantidad[$k],
-				'cantidad' => $valor,
+				'idSuministro' => $valor,
+				'idLaboratorio' => $request->idLab,
+				'diferencia' => $diferencia,
+				'cantidad' => $request->inputcantidad[$k],
 				'fechaRetencion' => date('Y-m-d H:i:s'),
 				'estado' => 1,
 				'created_at' => date('Y-m-d H:i:s'));
 			array_push($arrayRebaja, $array);
-			$suministros->descuentoMass($valor, $request->inputcantidad[$k]);
 		}
 
 		if (Rebaja::insert($arrayRebaja)) {

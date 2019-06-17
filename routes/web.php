@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('pdfLaboratorio', array('as' => 'pdfLaboratorio', 'uses' => 'LaboratorioController@pdfAceptada'));
 
 	Route::get('/Recepcion/anular/{id}', 'RecepcionController@anular')->name('Recepcion.anular');
+
 	Route::get('/Laboratorio/listarLaboratorio', 'LaboratorioController@listarPreLaboratorio')->name('Laboratorio.listar');
 	Route::get('/Laboratorio/laboratorioListar/{id}', 'LaboratorioController@listarLaboratorio')->name('Laboratorio.estados');
 	Route::get('/Laboratorio/traspaso/{id}', 'LaboratorioController@traspasoLaboratorio')->name('Laboratorio.traspaso');

@@ -120,7 +120,8 @@ class RecepcionController extends Controller {
 
 		$arrayRecepcion = $recepcion->all();
 
-		return view('recepcion.inicio', ['recepcion' => $arrayRecepcion]);
+		return $this->index();
+		//return view('recepcion.inicio', ['recepcion' => $arrayRecepcion]);
 
 	}
 

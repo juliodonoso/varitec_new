@@ -6,6 +6,7 @@ use App\Folios;
 use App\Http\Controllers\Controller;
 use App\Image;
 use App\Laboratorio;
+use App\Rebaja;
 use App\Recepcion;
 use App\Suministros;
 use Illuminate\Http\Request;
@@ -75,7 +76,7 @@ class LaboratorioController extends Controller {
 	public function edit($id) {
 		//
 		$lab = Laboratorio::find($id);
-		$lab->estado = 1;
+		$lab->estado = 2;
 		$lab->save();
 		//return view('laboratorio.laboratorio',['laboratorio'=> $laboratorio,'titulo'=>$titulo]);
 
@@ -97,13 +98,13 @@ class LaboratorioController extends Controller {
 
 		//enviar mail con confirmación
 
-		$lab->estado = 2;
+		$lab->estado = 3;
 		$lab->descripcionVisual = $request->descripcion ? $request->descripcion : '';
 		$res = Recepcion::find($lab->idRecepcion);
 
 		Mail::send('mailVaritec', array(
-			'name' => "name",
-			"body" => "Body of email.",
+			'name' => "Varitec",
+			"body" => "Mensajes desde la gestion",
 			"titulo" => "Laboratorio",
 			"subTitulo" => "Orden Laboratorio",
 			"nombre" => "julio",
@@ -185,7 +186,6 @@ class LaboratorioController extends Controller {
 	}
 
 	public function traspasoLaboratorio($id) {
-
 		$folio = new Folios();
 		$laboratorio = new laboratorio();
 		$recepcion = new Recepcion();
@@ -288,7 +288,6 @@ class LaboratorioController extends Controller {
 			$namePdf = 'Laboratorio-' . $items->numeroRecepcion . '.pdf';
 			return $pdf->download($namePdf);
 		}
-
 		return view('pdfview');
 	}
 
@@ -328,7 +327,6 @@ class LaboratorioController extends Controller {
 	}
 
 	public function gestion($id) {
-
 		$laboratorio = DB::table('tbllaboratorio as lab')
 			->join('tbrecepcion as res', 'lab.idRecepcion', '=', 'res.id')
 			->join('tbcliente as cl', 'cl.id', '=', 'res.idCliente')
@@ -370,11 +368,15 @@ class LaboratorioController extends Controller {
 			->get();
 
 		$suministros = new Suministros();
-		//dd( $suministros->all());
+
+		$rebaja = new Rebaja();
+		$rebajas = $rebaja->join('tbsuministro as tbs', 'tbs.id', '=', 'tbrebaja.idSuministro')->where('idLaboratorio', $id)->get();
+
 		return view('laboratorio.borrador', [
 			'laboratorio' => $laboratorio,
 			'imagen' => $imagenes,
 			'suministros' => $suministros->all(),
+			'rebajas' => $rebajas,
 		]);
 
 	}
@@ -396,11 +398,12 @@ class LaboratorioController extends Controller {
 			->get();
 
 		$suministros = new Suministros();
-		//dd( $suministros->all());
+
 		return view('laboratorio.gestion', [
 			'laboratorio' => $laboratorio,
 			'imagen' => $imagenes,
 			'suministros' => $suministros->all(),
+			'rebajas' => $rebajas,
 		]);
 
 	}

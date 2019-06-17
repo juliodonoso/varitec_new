@@ -44,11 +44,11 @@
                                           <i class="fa fa-share-square-o"></i>
                                        </a>
                                        @elseif($lab->estadoLab == 1)
-                                        <a href="{{ route('Laboratorio.borrador',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Trabajar">
+                                        <a href="{{ route('Laboratorio.work',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Trabajar">
                                           <i class="fa fa-briefcase"></i>
                                        </a>
                                        @elseif($lab->estadoLab == 2)
-                                        <a href="{{ route('Laboratorio.work',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Retomar">
+                                        <a href="{{ route('Laboratorio.borrador',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Retomar">
                                           <i class="fa fa-pencil-square"></i>
                                        </a>
 

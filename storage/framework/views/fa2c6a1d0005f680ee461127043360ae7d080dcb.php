@@ -75,6 +75,8 @@ function _asignar(id){
                               Cerradas
                           </a>
 
+
+
                     </div>
                        <table class="table table-hover table-condensed">
                                 <thead>

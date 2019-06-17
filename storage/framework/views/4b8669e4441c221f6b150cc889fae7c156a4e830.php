@@ -30,8 +30,12 @@
         })
             },
     on_error: function(){
-        alert('Rut incorrecto');
+         swal('Rut incorrecto');
         $('#rutCliente').val('')
+        $("#cliente").val('')
+        $("#telefono").val('')
+        $("#direccion").val('')
+        $("#mail").val('')
   }
   });
 

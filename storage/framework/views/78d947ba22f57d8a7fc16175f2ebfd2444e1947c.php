@@ -109,25 +109,23 @@
               method: 'POST',
               data: {'idLab':<?php echo e($laboratorio[0]->idLab); ?>,inputname,inputcantidad },
               success: function( data ){
-                  //$('#response pre').html( data );
-                  alert('paso');
+                  $.ajax({
+                    method: "GET",
+                    url: "../<?php echo e($laboratorio[0]->idLab); ?>/edit"
+                  })
+                    .done(function( msg ) {
+                      swal({
+                        text: "Orden de Laboratorio a quedado en borrador",
+                      }).then(()=>{
+                        location.href="../laboratorioListar/2";
+                      });
+                    });
               },
               error: function( jqXhr, textStatus, erSrorThrown ){
-                  //console.log( errorThrown );
               }
       })
-    return false;
-    $.ajax({
-      method: "GET",
-      url: "../<?php echo e($laboratorio[0]->idLab); ?>/edit"
-    })
-      .done(function( msg ) {
-        swal({
-          text: "Orden de Laboratorio a quedado en borrador",
-        }).then(()=>{
-          location.href="../laboratorioListar/1";
-        });
-      });
+
+
   })
 
   //consultar la cantidad de suministros
