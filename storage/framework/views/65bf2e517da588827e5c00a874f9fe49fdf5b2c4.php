@@ -79,7 +79,7 @@ function _anular(id){
                                       <td><?php echo e($reg->fechaRecepcion); ?></td>
                                       <td>
                                         <a href="<?php echo e(route('pdfview',['download'=>'pdf','id'=> $reg->id])); ?>"  class="btn btn-success btn-xs editereg" title="Ver">
-                                          <i class="fa fa-check"></i>
+                                          <i class="fa fa-file-pdf-o"></i>
                                        </a>
 
                                         <a href="javascript:_anular(<?php echo e($reg->id); ?>)"  class="btn btn-error btn-xs editereg" title="Anular">

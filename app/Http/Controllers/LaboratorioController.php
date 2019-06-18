@@ -310,7 +310,7 @@ class LaboratorioController extends Controller {
 				'prBarcode as codEquipo',
 				'mailContacto')
 			->where('re.id', $request->id)
-			->where('re.estado', 1)
+		//->where('re.estado', 1)
 			->get()->first();
 
 		//$items = DB::table("tbrecepcion")->get();
@@ -319,7 +319,7 @@ class LaboratorioController extends Controller {
 
 		if ($request->has('download')) {
 			$pdf = PDF::loadView('pdfLaboratorio');
-			$namePdf = 'Laboratorio-' . $items->numeroRecepcion . '.pdf';
+			$namePdf = 'Laboratorio-' . $items->numeroLaboratorio . '.pdf';
 			return $pdf->download($namePdf);
 		}
 
