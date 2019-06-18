@@ -1,7 +1,7 @@
 <?php $__env->startSection('content'); ?>
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 <div class="content" >
   <div class="container-fluid" ng-init="getConsultaUsers(1); setRolUser(1)">
     <div class="row">
@@ -19,10 +19,11 @@
                        <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                    <th>Numero laboratorio</th>
+                                    <th>Número laboratorio</th>
+                                    <th>Número recepción</th>
                                     <th>Cliente</th>
-                                    <th>Codigo Equipo</th>
-                                    <th>Descripción Equipo</th>
+                                    <th>Código</th>
+                                    <th>Equipo</th>
                                     <th>Trabajo</th>
                                     <th>Acciones</th>
                                     </tr>
@@ -31,6 +32,7 @@
                                    <?php $__currentLoopData = $laboratorio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lab): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                       <td><?php echo e($lab->numeroLaboratorio); ?></td>
+                                      <td><?php echo e($lab->idRes); ?></td>
                                       <td><?php echo e($lab->clNombre); ?></td>
                                       <td><?php echo e($lab->prBarcode); ?></td>
                                       <td><?php echo e($lab->prNombre); ?></td>

@@ -7,6 +7,7 @@
      <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
@@ -72,7 +73,7 @@
 
             <div class="form-group ">
                 <label for="telefonoCliente">Telefono:</label>
-                <span type="telefonoCliente" id="telefonoCliente">juan perez</span>
+                <span type="telefonoCliente" id="telefonoCliente">{{ $items->clTelefono }}</span>
             </div>
 
             <!-- capsula -->
@@ -114,7 +115,7 @@
 
               <div class="form-group ">
                   <label for="cliente">Fecha recepcion:</label>
-                  <span type="cliente" id="cliente">{{ $items->fechaRecepcion }}</span>
+                  <span type="cliente" id="cliente">{{ date("d-m-Y",strtotime($items->fechaRecepcion)) }}</span>
               </div>
 
              <!-- capsula -->

@@ -161,7 +161,6 @@ class LaboratorioController extends Controller {
 			->where('lab.estado', 0)
 			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
 			->get();
-
 		return view('laboratorio.laboratorio', ['laboratorio' => $laboratorio, 'titulo' => 'Cotización laboratorio']);
 	}
 
@@ -268,6 +267,7 @@ class LaboratorioController extends Controller {
 				'numeroRecepcion',
 				'clNombre',
 				'clRut',
+				'clTelefono',
 				'idProducto',
 				'fechaRecepcion',
 				'tipoTrabajo',
@@ -285,7 +285,7 @@ class LaboratorioController extends Controller {
 
 		if ($request->has('download')) {
 			$pdf = PDF::loadView('pdfview');
-			$namePdf = 'Laboratorio-' . $items->numeroRecepcion . '.pdf';
+			$namePdf = 'Laboratorio-' . $items->numeroLaboratorio . '.pdf';
 			return $pdf->download($namePdf);
 		}
 		return view('pdfview');
@@ -301,6 +301,7 @@ class LaboratorioController extends Controller {
 				'numeroLaboratorio',
 				'clNombre',
 				'clRut',
+				'clTelefono',
 				're.idProducto',
 				'lab.fechaRecepcion',
 				'lab.tipoTrabajo',

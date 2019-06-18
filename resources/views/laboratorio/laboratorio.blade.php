@@ -3,7 +3,7 @@
 @section('content')
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 <div class="content" >
   <div class="container-fluid" ng-init="getConsultaUsers(1); setRolUser(1)">
     <div class="row">
@@ -21,10 +21,11 @@
                        <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                    <th>Numero laboratorio</th>
+                                    <th>Número laboratorio</th>
+                                    <th>Número recepción</th>
                                     <th>Cliente</th>
-                                    <th>Codigo Equipo</th>
-                                    <th>Descripción Equipo</th>
+                                    <th>Código</th>
+                                    <th>Equipo</th>
                                     <th>Trabajo</th>
                                     <th>Acciones</th>
                                     </tr>
@@ -33,6 +34,7 @@
                                    @foreach($laboratorio as $lab)
                                     <tr>
                                       <td>{{ $lab->numeroLaboratorio }}</td>
+                                      <td>{{ $lab->idRes }}</td>
                                       <td>{{ $lab->clNombre }}</td>
                                       <td>{{ $lab->prBarcode }}</td>
                                       <td>{{ $lab->prNombre }}</td>
