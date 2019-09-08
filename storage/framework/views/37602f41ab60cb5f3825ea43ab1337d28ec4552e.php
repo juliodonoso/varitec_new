@@ -31,8 +31,8 @@
                                 <tbody>
                                    <?php $__currentLoopData = $laboratorio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lab): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                      <td><?php echo e($lab->numeroLaboratorio); ?></td>
-                                      <td><?php echo e($lab->idRes); ?></td>
+                                      <td><?php echo e($lab->numeroLaboratorio); ?> </td>
+                                      <td><?php echo e($lab->numeroRecepcion); ?></td>
                                       <td><?php echo e($lab->clNombre); ?></td>
                                       <td><?php echo e($lab->prBarcode); ?></td>
                                       <td><?php echo e($lab->prNombre); ?></td>
@@ -43,19 +43,34 @@
                                         <a href="<?php echo e(route('Laboratorio.gestion',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Gestionar">
                                           <i class="fa fa-share-square-o"></i>
                                        </a>
+
+                                        <a href="<?php echo e(route('pdfRecepcion',['download'=>'pdf','id'=> $lab->id])); ?>" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                          <i class="fa fa-file-pdf-o"></i>
+                                       </a>
                                        <?php elseif($lab->estadoLab == 1): ?>
                                         <a href="<?php echo e(route('Laboratorio.work',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Trabajar">
                                           <i class="fa fa-briefcase"></i>
                                        </a>
+
+                                        <a href="<?php echo e(route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->id])); ?>" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                          <i class="fa fa-file-pdf-o"></i>
+                                       </a>
+
                                        <?php elseif($lab->estadoLab == 2): ?>
                                         <a href="<?php echo e(route('Laboratorio.borrador',['id'=>$lab->id ])); ?>"  class="btn btn-success btn-xs editereg" title="Retomar">
                                           <i class="fa fa-pencil-square"></i>
                                        </a>
 
-                                       <?php endif; ?>
-                                        <a href="<?php echo e(route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->idRes])); ?>" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                        <a href="<?php echo e(route('pdfPendientes',['download'=>'pdf','id'=> $lab->id])); ?>" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
                                           <i class="fa fa-file-pdf-o"></i>
                                        </a>
+                                       <?php elseif($lab->estadoLab == 3): ?>
+                                        <a href="<?php echo e(route('pdfTerminadas',['download'=>'pdf','id'=> $lab->id])); ?>" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                          <i class="fa fa-file-pdf-o"></i>
+                                       </a>
+                                       <?php endif; ?>
+
+
                                         </td>
                                     </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

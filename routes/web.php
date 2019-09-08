@@ -37,7 +37,11 @@ Route::middleware(['auth'])->group(function () {
 	Route::resource('Recepcion', 'RecepcionController');
 
 	Route::get('pdfview', array('as' => 'pdfview', 'uses' => 'RecepcionController@pdfview'));
-	Route::get('pdfLaboratorio', array('as' => 'pdfLaboratorio', 'uses' => 'LaboratorioController@pdfAceptada'));
+	Route::get('pdfLaboratorio', array('as' => 'pdfLaboratorio', 'uses' => 'LaboratorioController@pdfLaboratorio'));
+	Route::get('pdfAceptada', array('as' => 'pdfAceptada', 'uses' => 'LaboratorioController@pdfAceptada'));
+	Route::get('pdfTerminadas', array('as' => 'pdfTerminadas', 'uses' => 'LaboratorioController@pdfTerminadas'));
+	Route::get('pdfRecepcion', array('as' => 'pdfRecepcion', 'uses' => 'LaboratorioController@pdfRecepcion'));
+	Route::get('pdfPendientes', array('as' => 'pdfPendientes', 'uses' => 'LaboratorioController@pdfPendientes'));
 
 	Route::get('/Recepcion/anular/{id}', 'RecepcionController@anular')->name('Recepcion.anular');
 

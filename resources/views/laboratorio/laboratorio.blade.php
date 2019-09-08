@@ -33,8 +33,8 @@
                                 <tbody>
                                    @foreach($laboratorio as $lab)
                                     <tr>
-                                      <td>{{ $lab->numeroLaboratorio }}</td>
-                                      <td>{{ $lab->idRes }}</td>
+                                      <td>{{ $lab->numeroLaboratorio }} </td>
+                                      <td>{{ $lab->numeroRecepcion }}</td>
                                       <td>{{ $lab->clNombre }}</td>
                                       <td>{{ $lab->prBarcode }}</td>
                                       <td>{{ $lab->prNombre }}</td>
@@ -45,19 +45,34 @@
                                         <a href="{{ route('Laboratorio.gestion',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Gestionar">
                                           <i class="fa fa-share-square-o"></i>
                                        </a>
+
+                                        <a href="{{ route('pdfRecepcion',['download'=>'pdf','id'=> $lab->id]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                          <i class="fa fa-file-pdf-o"></i>
+                                       </a>
                                        @elseif($lab->estadoLab == 1)
                                         <a href="{{ route('Laboratorio.work',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Trabajar">
                                           <i class="fa fa-briefcase"></i>
                                        </a>
+
+                                        <a href="{{ route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->id]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                          <i class="fa fa-file-pdf-o"></i>
+                                       </a>
+
                                        @elseif($lab->estadoLab == 2)
                                         <a href="{{ route('Laboratorio.borrador',['id'=>$lab->id ])}}"  class="btn btn-success btn-xs editereg" title="Retomar">
                                           <i class="fa fa-pencil-square"></i>
                                        </a>
 
-                                       @endif
-                                        <a href="{{ route('pdfLaboratorio',['download'=>'pdf','id'=> $lab->idRes]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                        <a href="{{ route('pdfPendientes',['download'=>'pdf','id'=> $lab->id]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
                                           <i class="fa fa-file-pdf-o"></i>
                                        </a>
+                                       @elseif($lab->estadoLab == 3)
+                                        <a href="{{ route('pdfTerminadas',['download'=>'pdf','id'=> $lab->id]) }}" style="background-color:red"  class="btn btn-error btn-xs editereg" title="PDF">
+                                          <i class="fa fa-file-pdf-o"></i>
+                                       </a>
+                                       @endif
+
+
                                         </td>
                                     </tr>
                                     @endforeach

@@ -159,7 +159,7 @@ class LaboratorioController extends Controller {
 			->leftJoin('tbcliente as cl', 'cl.id', '=', 're.idCliente')
 			->leftJoin('tbproducto as p', 'p.id', '=', 're.idProducto')
 			->where('lab.estado', 0)
-			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
+			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 're.numeroRecepcion as numeroRecepcion', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
 			->get();
 		return view('laboratorio.laboratorio', ['laboratorio' => $laboratorio, 'titulo' => 'Cotización laboratorio']);
 	}
@@ -170,7 +170,7 @@ class LaboratorioController extends Controller {
 			->leftJoin('tbcliente as cl', 'cl.id', '=', 're.idCliente')
 			->leftJoin('tbproducto as p', 'p.id', '=', 're.idProducto')
 			->where('lab.estado', $id)
-			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
+			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 're.numeroRecepcion as numeroRecepcion', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
 			->get();
 		$titulo = "Activas";
 		if ($id == 1) {
@@ -226,23 +226,26 @@ class LaboratorioController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function pdfRecepcion(Request $request) {
-		$items = DB::table('tbrecepcion as re')
+		$items = DB::table('tbllaboratorio as lab')
+			->join('tbrecepcion as re', 're.id', '=', 'lab.idRecepcion')
 			->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
 			->join('tbproducto as pr', 'pr.id', '=', 're.idProducto')
-			->select('re.id  as id',
+			->select('lab.id  as idLaboratorio',
 				'numeroRecepcion',
+				'numeroLaboratorio',
 				'clNombre',
 				'clRut',
-				'idProducto',
-				'fechaRecepcion',
-				'tipoTrabajo',
+				'clTelefono',
+				're.idProducto',
+				'lab.fechaRecepcion',
+				'lab.tipoTrabajo',
 				'contactoTecnico',
-				'descripcionVisual',
+				'lab.descripcionVisual',
 				'pr.prNombre as nombreProducto',
 				'prBarcode as codEquipo',
 				'mailContacto')
-			->where('re.id', $request->id)
-			->where('re.estado', 0)
+			->where('lab.id', $request->id)
+			->where('lab.estado', 0)
 			->get()->first();
 
 		//$items = DB::table("tbrecepcion")->get();
@@ -250,12 +253,12 @@ class LaboratorioController extends Controller {
 		view()->share('items', $items);
 
 		if ($request->has('download')) {
-			$pdf = PDF::loadView('pdfview');
-			$namePdf = 'Recepcion-' . $items->numeroRecepcion . '.pdf';
+			$pdf = PDF::loadView('pdfLaboratorio');
+			$namePdf = 'Laboratorio-' . $items->numeroLaboratorio . '.pdf';
 			return $pdf->download($namePdf);
 		}
 
-		return view('pdfview');
+		return view('pdfLaboratorio');
 	}
 
 	public function pdfTerminadas(Request $request) {
@@ -265,30 +268,64 @@ class LaboratorioController extends Controller {
 			->join('tbproducto as pr', 'pr.id', '=', 're.idProducto')
 			->select('re.id  as id',
 				'numeroRecepcion',
+				'numeroLaboratorio',
 				'clNombre',
 				'clRut',
 				'clTelefono',
-				'idProducto',
-				'fechaRecepcion',
-				'tipoTrabajo',
+				'lab.idProducto',
+				'lab.fechaRecepcion',
+				'lab.tipoTrabajo',
 				'contactoTecnico',
-				'descripcionVisual',
+				'lab.descripcionVisual',
 				'pr.prNombre as nombreProducto',
 				'prBarcode as codEquipo',
 				'mailContacto')
-			->where('re.id', $request->id)
-			->where('re.estado', 3)
+			->where('lab.id', $request->id)
 			->get()->first();
 		//$items = DB::table("tbrecepcion")->get();
 
 		view()->share('items', $items);
 
 		if ($request->has('download')) {
-			$pdf = PDF::loadView('pdfview');
+			$pdf = PDF::loadView('pdfLaboratorio');
 			$namePdf = 'Laboratorio-' . $items->numeroLaboratorio . '.pdf';
 			return $pdf->download($namePdf);
 		}
-		return view('pdfview');
+		return view('pdfLaboratorio');
+	}
+
+	public function pdfPendientes(Request $request) {
+		$items = DB::table('tbllaboratorio as lab')
+			->join('tbrecepcion as re', 're.id', '=', 'lab.idRecepcion')
+			->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+			->join('tbproducto as pr', 'pr.id', '=', 're.idProducto')
+			->select('lab.id  as idLaboratorio',
+				'numeroRecepcion',
+				'numeroLaboratorio',
+				'clNombre',
+				'clRut',
+				'clTelefono',
+				're.idProducto',
+				'lab.fechaRecepcion',
+				'lab.tipoTrabajo',
+				'contactoTecnico',
+				'lab.descripcionVisual',
+				'pr.prNombre as nombreProducto',
+				'prBarcode as codEquipo',
+				'mailContacto')
+			->where('lab.id', $request->id)
+			->where('lab.estado', 2)
+			->get()->first();
+		//$items = DB::table("tbrecepcion")->get();
+
+		view()->share('items', $items);
+
+		if ($request->has('download')) {
+			$pdf = PDF::loadView('pdfLaboratorio');
+			$namePdf = 'Laboratorio-' . $items->numeroLaboratorio . '.pdf';
+			return $pdf->download($namePdf);
+		}
+		return view('pdfLaboratorio');
 	}
 
 	public function pdfAceptada(Request $request) {
@@ -310,8 +347,44 @@ class LaboratorioController extends Controller {
 				'pr.prNombre as nombreProducto',
 				'prBarcode as codEquipo',
 				'mailContacto')
-			->where('re.id', $request->id)
-		//->where('re.estado', 1)
+			->where('lab.id', $request->id)
+			->where('lab.estado', 1)
+			->get()->first();
+
+		//$items = DB::table("tbrecepcion")->get();
+
+		view()->share('items', $items);
+
+		if ($request->has('download')) {
+			$pdf = PDF::loadView('pdfLaboratorio');
+			$namePdf = 'Laboratorio-' . $items->numeroLaboratorio . '.pdf';
+			return $pdf->download($namePdf);
+		}
+
+		return view('pdfLaboratorio');
+	}
+
+	public function pdfLaboratorio(Request $request) {
+		$items = DB::table('tbllaboratorio as lab')
+			->join('tbrecepcion as re', 're.id', '=', 'lab.idRecepcion')
+			->join('tbcliente as cl', 'cl.id', '=', 're.idCliente')
+			->join('tbproducto as pr', 'pr.id', '=', 're.idProducto')
+			->select('lab.id  as idLaboratorio',
+				'numeroRecepcion',
+				'numeroLaboratorio',
+				'clNombre',
+				'clRut',
+				'clTelefono',
+				're.idProducto',
+				'lab.fechaRecepcion',
+				'lab.tipoTrabajo',
+				'contactoTecnico',
+				'lab.descripcionVisual',
+				'pr.prNombre as nombreProducto',
+				'prBarcode as codEquipo',
+				'mailContacto')
+			->where('lab.id', $request->id)
+			->where('lab.estado', 1)
 			->get()->first();
 
 		//$items = DB::table("tbrecepcion")->get();

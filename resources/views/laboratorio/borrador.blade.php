@@ -320,30 +320,33 @@ $( document ).change( "select[name*='inputname']", function() {
                         </div>
                        </div>
 
-                      <div class="col-md-12">
-                      <div class="input-group hdtuto control-group lst increment" >
-                        <div class="col-md-10">
-                          <select name="inputname[]" class="myfrm form-control" >
-                              <option  selected="true" disabled="disabled">Seleccione Suministro</option>
-                                @foreach($suministros as $sum)
-                                <option value="{{ $sum->id }}">{{ $sum->prNombre }}</option>
-                                @endforeach
-                            </select>
+                    <div class="col-md-12">
 
-                        </div>
-                        <div class="col-md-2"><input type="number" name="inputcantidad[]" class="myfrm form-control" value="0" ></div>
-                          <div class="input-group-btn">
+                      <table class="table table-bordered table-striped text-center ">
+                        <thead>
+                          <tr>
+                            <th scope="col text-center">Producto</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Diferencia</th>
+                            <th scope="col">Acción</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($rebajas as $r)
+                          <tr>
+                            <th scope="row">{{ $r->prNombre }}</th>
+                            <td>{{ $r->cantidad }}</td>
+                            <td>{{ $r->diferencia }}</td>
+                            <td><button type="button" class="btn btn-danger">Quitar</button></td>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
 
-                          <button class="btn btn-success" disabled="disabled" id="agregar" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Agregar</button>
+                    </div>
 
-                          </div>
-                        </div>
 
-                        <div class="clone hide">
 
-                        </div>
-
-            </div>
 
             <div class="row">
              <div class="col-md-12">
@@ -367,6 +370,22 @@ $( document ).change( "select[name*='inputname']", function() {
 
 
 </div>
+<style>
+  table th {
+   text-align: center;
+   font-weight: bolder !impotant;
+}
+
+.table {
+   margin: auto;
+}
+.table>thead>tr>th {
+    border-bottom-width: 1px;
+    font-size: 1.25em;
+    font-weight: bolder !important;
+    background-color: #f1f1f1;
+}
+</style>
 
 
 @endsection
