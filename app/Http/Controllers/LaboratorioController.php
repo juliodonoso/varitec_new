@@ -123,7 +123,7 @@ class LaboratorioController extends Controller {
 			->leftJoin('tbcliente as cl', 'cl.id', '=', 're.idCliente')
 			->leftJoin('tbproducto as p', 'p.id', '=', 're.idProducto')
 			->where('lab.estado', 0)
-			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
+			->select('lab.id', 'clNombre', 'lab.numeroLaboratorio as numeroLaboratorio', 're.numeroRecepcion as numeroRecepcion', 'p.prBarcode as prBarcode', 'p.prNombre', 're.tipoTrabajo', 're.id as idRes', 'lab.estado as estadoLab')
 			->get();
 
 		return view('laboratorio.laboratorio', ['laboratorio' => $laboratorio, 'titulo' => 'Activas']);

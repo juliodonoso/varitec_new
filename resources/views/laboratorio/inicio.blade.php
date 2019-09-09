@@ -82,7 +82,7 @@ function _asignar(id){
                        <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                    <th>Numero Recepción</th>
+                                    <th>Número Recepción</th>
                                     <th>Cliente</th>
                                     <th>Codigo</th>
                                     <th>Equipo</th>
