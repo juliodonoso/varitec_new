@@ -188,6 +188,7 @@ class RecepcionController extends Controller {
 			->join('tbproducto as pr', 'pr.id', '=', 're.idProducto')
 			->select('re.id  as id',
 				'numeroRecepcion',
+				'clTelefono',
 				'clNombre',
 				'clRut',
 				'idProducto',

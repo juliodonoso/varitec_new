@@ -43,7 +43,6 @@ class LaboratorioController extends Controller {
 	 */
 	public function create() {
 		//
-
 		return view('laboratorio.nuevo');
 	}
 

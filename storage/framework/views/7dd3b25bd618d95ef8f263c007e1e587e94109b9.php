@@ -69,7 +69,7 @@
 
             <div class="form-group ">
                 <label for="telefonoCliente">Telefono:</label>
-                <span id="telefonoCliente">juan perez</span>
+                <span id="telefonoCliente"><?php echo e($items->clTelefono); ?></span>
             </div>
 
             <!-- capsula -->
@@ -140,7 +140,17 @@
     <div class="col-12 col-xs-12">
       <div class="form-group">
 
-          <span><b>Tipo Trabajo:</b><p class="form-control-static"> <?php echo e($items->tipoTrabajo); ?></p></span>
+          <span><b>Tipo Trabajo:</b><p class="form-control-static">
+          <?php if($items->tipoTrabajo ==  0 ): ?>
+          Sin selección
+          <?php elseif( $items->tipoTrabajo ==  1 ): ?>
+          reparación
+          <?php elseif( $items->tipoTrabajo ==  2 ): ?>
+          Laboratorio
+          <?php elseif( $items->tipoTrabajo ==  3 ): ?>
+          Post - Venta
+          <?php endif; ?>
+          </p></span>
           <label>Descripción Visual</label><br>
           <blockquote>
             <?php echo e($items->descripcionVisual); ?>

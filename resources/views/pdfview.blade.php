@@ -69,7 +69,7 @@
 
             <div class="form-group ">
                 <label for="telefonoCliente">Telefono:</label>
-                <span id="telefonoCliente">juan perez</span>
+                <span id="telefonoCliente">{{$items->clTelefono}}</span>
             </div>
 
             <!-- capsula -->
@@ -140,7 +140,17 @@
     <div class="col-12 col-xs-12">
       <div class="form-group">
 
-          <span><b>Tipo Trabajo:</b><p class="form-control-static"> {{ $items->tipoTrabajo }}</p></span>
+          <span><b>Tipo Trabajo:</b><p class="form-control-static">
+          @if($items->tipoTrabajo ==  0 )
+          Sin selección
+          @elseif( $items->tipoTrabajo ==  1 )
+          reparación
+          @elseif( $items->tipoTrabajo ==  2 )
+          Laboratorio
+          @elseif( $items->tipoTrabajo ==  3 )
+          Post - Venta
+          @endif
+          </p></span>
           <label>Descripción Visual</label><br>
           <blockquote>
             {{ $items->descripcionVisual }}

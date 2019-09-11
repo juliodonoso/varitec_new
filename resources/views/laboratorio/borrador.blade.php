@@ -182,7 +182,13 @@ $( document ).change( "select[name*='inputname']", function() {
   sessionStorage.setItem("idSuministro", $(this).find('option:selected').val());
 });
 
+$(".quitarRebajaBtn").click(function(){
+  alert(this.id)
 })
+
+})
+
+
   </script>
 @endpush
 
@@ -322,12 +328,12 @@ $( document ).change( "select[name*='inputname']", function() {
 
                     <div class="col-md-12">
 
-                      <table class="table table-bordered table-striped text-center ">
+                      <table class="table table-bordered table-striped text-center">
                         <thead>
-                          <tr>
-                            <th scope="col text-center">Producto</th>
+                          <tr class="text-dark">
+                            <th scope="col">Producto</th>
                             <th scope="col">Cantidad</th>
-                            <th scope="col">Diferencia</th>
+                            <th scope="col">Stock</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -335,9 +341,16 @@ $( document ).change( "select[name*='inputname']", function() {
                           @foreach($rebajas as $r)
                           <tr>
                             <th scope="row">{{ $r->prNombre }}</th>
-                            <td>{{ $r->cantidad }}</td>
-                            <td>{{ $r->diferencia }}</td>
-                            <td><button type="button" class="btn btn-danger">Quitar</button></td>
+                            <td
+                            @if($r->cantidad < $r->prUnidad)
+                            class="text-warning"
+                            @endif
+                            >{{ $r->cantidad }}</td>
+                            <td>{{ $r->prUnidad }}</td>
+                            <td>
+                              <input type="hidden" class="quitarRebajaValue{{$r->id}}"  value="{{$r->id}}">
+                              <button class="btn btn-danger quitarRebajaBtn"  id="{{$r->id}}" type="button" >Quitar</button>
+                            </td>
                           </tr>
                           @endforeach
                         </tbody>
@@ -368,8 +381,8 @@ $( document ).change( "select[name*='inputname']", function() {
   </div>
    <br>
 
-
 </div>
+
 <style>
   table th {
    text-align: center;

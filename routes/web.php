@@ -55,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/Laboratorio/mail', 'LaboratorioController@enviarMail')->name('Laboratorio.mail');
 	Route::resource('Laboratorio', 'LaboratorioController');
 	//Route::get('/bodega/agregar','BodegasController@add')->name('bodega.add');
-	//Route::resource('Bodega','BodegaController');
+	//Route::resource('Bodega','BodegaController');6
 	Route::resource('Clientes', 'ClientesController');
 	Route::resource('Productos', 'ProductosController');
 	Route::resource('Proveedores', 'ProveedoresController');
@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::resource('suministros', 'SuministrosController');
 
 	Route::post('/Rebaja/create', 'RebajaController@rebajar')->name('rebaja.crear');
+	Route::get('/Rebaja/create/{id}', 'RebajaController@eliminar')->name('rebaja.crear');
 
 	/* cotizaciones  */
 	Route::get('/cotizaciones/mostrar/', 'CotizacionesController@mostrar')->name('cotizaciones.mostrar');
