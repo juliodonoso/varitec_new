@@ -30,7 +30,7 @@
   <div class="row">
     <div class="col col-6 col-xs-6 col-sm-6">
       <div class="">
-        <img src="img/logo-varitec.jpg" alt="varitec recepción" ><br>
+        <img style="background-color: #212a7d;width: 180px;height: 60px;padding: 10px" src="img/logo-varitec.png" alt="varitec recepción" ><br>
         <h4><b>VARITEC ELECTRONICA LIMITADA</b></h4><br>
         <span><b>O'HIGGINS 362 - OUILICURA</b></span><br>
         <span><b>FONOS-FAX:  +56-2 2627 1783 +56-2 2627 9581</b></span><br>
@@ -39,8 +39,8 @@
 
       </div>
     </div>
-    <div class="col col-6 col-xs-5 col-sm-6 ">
-      <div class="panel panel-default">
+    <div class="col col-5 col-xs-5 col-sm-5 ">
+      <div class="panel ">
         <div class="panel-body">
             <h2>Recepcion #{{ $items->numeroRecepcion }}</h2>
           </div>
@@ -50,7 +50,7 @@
   <!-- head info -->
   <div class="row">
     <div class="col col-6 col-xs-6 col-sm-6">
-        <div class="panel panel-default">
+        <div class="panel ">
             <!-- capsula -->
 
             <div class="form-group ">
@@ -90,9 +90,9 @@
         </div>
     </div>
 
-    <div class="col col-6 col-xs-5 ">
+    <div class="col col-5 col-xs-5 ">
 
-        <div class="panel panel-default">
+        <div class="panel ">
             <!-- capsula -->
 
               <div class="form-group">
@@ -133,10 +133,10 @@
     </div>
 
   </div>
-
+  <hr>
   <!--  pie-->
   <div class="row">
-    <div class="panel panel-default">
+    <div class="panel ">
     <div class="col-12 col-xs-12">
       <div class="form-group">
 

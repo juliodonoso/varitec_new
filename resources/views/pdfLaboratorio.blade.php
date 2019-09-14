@@ -4,7 +4,6 @@
 <head>
   <title>Laboratorio Varitec</title>
   <meta charset="utf-8">
-     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
@@ -31,19 +30,17 @@
   <br>
   <!-- head -->
   <div class="row">
-    <div class="col-6 col-xs-6">
-      <div class="form-group">
-        <img src="img/logo-varitec.jpg" alt="varitec recepción" ><br>
+    <div class="col-6 col-xs-6 col-sm-6">
+        <img src="img/logo-varitec.png" style="background-color: #212a7d;width: 180px;height: 60px;padding: 10px"  alt="Varitec laboratorio" ><br>
         <h4><b>VARITEC ELECTRONICA LIMITADA</b></h4><br>
         <span><b>O'HIGGINS 362 - OUILICURA</b></span><br>
         <span><b>FONOS-FAX:  +56-2 2627 1783 +56-2 2627 9581</b></span><br>
         <span><b>CELULAR: 09-817e 4697</b></span><br>
         <span>E-mail : lurzua@varitecelectronica.cl</span><br>
 
-      </div>
     </div>
-    <div class="col-6 col-xs-6 pull-right">
-      <div class="panel panel-default">
+    <div class="col col-5 col-xs-5 col-sm-5 ">
+      <div class="panel ">
         <div class="panel-body">
             <h2>Laboratorio #{{ $items->numeroLaboratorio }}</h2>
             <h2>Recepcion #{{ $items->numeroRecepcion }}</h2>
@@ -53,8 +50,8 @@
   </div>
   <!-- head info -->
   <div class="row">
-    <div class="col col-6 col-xs-5">
-        <div class="panel panel-default">
+    <div class="col col-6 col-xs-6 col-sm-6">
+        <div class="panel ">
             <!-- capsula -->
 
             <div class="form-group ">
@@ -94,9 +91,9 @@
         </div>
     </div>
 
-    <div class="col col-6 col-xs-6">
+    <div class="col col-5 col-xs-5">
 
-        <div class="panel panel-default">
+        <div class="panel ">
             <!-- capsula -->
 
               <div class="form-group">
