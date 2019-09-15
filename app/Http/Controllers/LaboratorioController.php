@@ -471,13 +471,11 @@ class LaboratorioController extends Controller {
 			->get();
 
 		$suministros = new Suministros();
-
+		//dd($suministros->count());
 		return view('laboratorio.gestion', [
 			'laboratorio' => $laboratorio,
 			'imagen' => $imagenes,
-			'suministros' => $suministros->all(),
-			'rebajas' => $rebajas,
-		]);
+			'suministros' => $suministros->all()]);
 
 	}
 
